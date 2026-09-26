@@ -32,9 +32,8 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Serve the build
         run: |
-          mkdir -p "$RUNNER_TEMP/srv"
-          ln -s "$PWD/dist/pages" "$RUNNER_TEMP/srv/deepgrid-platform-v2"
-          python3 -m http.server 8771 --directory "$RUNNER_TEMP/srv" >/dev/null 2>&1 &
+          # Pages serves /products from products.html; http.server does not (scripts/serve-pages.py does).
+          python3 scripts/serve-pages.py "$PWD/dist/pages" deepgrid-platform-v2 8771 >/dev/null 2>&1 &
           until curl -sf http://127.0.0.1:8771/deepgrid-platform-v2/ >/dev/null; do sleep 1; done
       - run: npm run verify -- http://127.0.0.1:8771/deepgrid-platform-v2/ verify-shots
       - if: failure()

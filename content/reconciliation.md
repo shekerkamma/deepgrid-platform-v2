@@ -55,3 +55,13 @@ R1–R8 describe it.
 | O3 | T100 as a chip (reference) vs a licence (showcase). Adopted the chip; the licence offering needs a name that is not T100, or it becomes "licence to the DG-T100 models". | products/dg-t100 |
 | O4 | The showcase's economics assume one 28 nm die for all fifteen SKUs. With first silicon on 130 nm (R1), which SKUs ship on 130 nm and which wait for 28 nm is not stated by either source. | showcase investment, slide notes |
 | O5 | Founding year: 2020 (about/story) vs 2018 (home timeline). Neither adopted until confirmed. | about/story, home |
+
+## Answers to the open items (2026-09-26, self-answered under the user's standing instruction)
+
+| # | Answer |
+|---|---|
+| O1 | A100 cores: the reference's specification (8-core RISC-V, vector engine, 4 cores in test) is used; its hero headline ("28-core") is not. |
+| O2 | "H100" is the DG-H100 Healthcare SoC. The showcase's wrist-worn driver monitor keeps its content as **Driver Monitor Band**, without the H100 code. |
+| O3 | "T100" is the DG-T100 Transformer NPU. The showcase's licence offering becomes **Licence: DG-T100 models and toolchain**. |
+| O4 | First silicon is stated as SkyWater 130 nm (2026). The showcase's 28 nm die is presented as the roadmap production node, consistent with the reference's own "28 nm → 5 nm" roadmap. Which SKUs wait for 28 nm stays unstated until a source says. |
+| O5 | Founding year omitted until confirmed. |
