@@ -1,4 +1,5 @@
 'use client';
+import { ProductDie } from '../die-map';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Play } from 'lucide-react';
 import {
   products,
@@ -176,10 +177,12 @@ export default function ProductPage({
   product: p,
   go,
   back,
+  reduced = false,
 }: {
   product: Product;
   go: Go;
   back: () => void;
+  reduced?: boolean;
 }) {
   const b = (briefs.products as Record<string, Brief>)[p.id];
   const story = (stories as Record<string, Story>)[p.id];
@@ -298,6 +301,8 @@ export default function ProductPage({
           <Anchor go={go} link={silicon[0]} />
         </div>
       </section>
+
+      <ProductDie productId={p.id} reduced={reduced} go={go} />
 
       {story && (
         <section className="pp-block pp-case" aria-labelledby="pp-case-title">

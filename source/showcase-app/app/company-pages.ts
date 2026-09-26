@@ -100,7 +100,7 @@ export const companyPages: CompanyPage[] = [
       { kind: 'split', title: 'ADAS AI Platform', lede: 'Real-time perception + Intelligent decision-making + Safety-critical execution', from: REF + '/use-cases/adas',
         paras: [
           'The automotive industry is rapidly evolving towards autonomous driving, requiring sophisticated AI systems that can perceive, understand, and react to complex driving scenarios in real-time. Deepgrid\'s ADAS AI Platform delivers the computational power and safety-critical reliability needed for Level 2+ to Level 4 autonomous driving systems, combining advanced sensor fusion, AI perception, and intelligent path planning.',
-          'Measured today on the DG-A100 FPGA prototype, the full perception pipeline processes a camera frame in 35.96 ms (28.12 FPS). That is the time to process a whole frame end to end, a different measure from the safety-decision latency above.',
+          'Measured today on the DG-A100 FPGA prototype, the full perception pipeline has 35.96 ms end-to-end latency per frame and runs at 28.12 FPS. That is the time to process a whole frame end to end, a different measure from the safety-decision latency above.',
           'Demonstrator systems run at TiHAN (IIT Hyderabad) and NATRAX Indore for ADAS truck and robotic use cases.',
         ],
         image: img('posters/truck.webp'), imageAlt: 'Simulation still of the AD2 truck kit’s sensor coverage' },

@@ -1,0 +1,103 @@
+/* Product -> die map (app/die-map.tsx), on the showcase tokens. The model is the figure; the picker is the index. */
+.dm { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(1.25rem, 3vw, 2.5rem); align-items: stretch; margin: 0 0 2.5rem; padding: clamp(1rem, 2vw, 1.5rem); border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.dm-stage { position: relative; min-height: 380px; border-radius: 10px; overflow: hidden; background: radial-gradient(ellipse at 50% 55%, #30362c, #141917 72%); }
+.dm-stage .silicon-canvas { position: absolute; inset: 0; }
+.dm-stage-note { position: absolute; left: 1rem; bottom: .8rem; right: 9rem; margin: 0; font-size: var(--sc-t-meta); color: var(--ink-3); }
+.dm-motion { position: absolute; right: .8rem; bottom: .7rem; }
+.dm-side { display: grid; gap: 1rem; align-content: start; }
+.dm-side h2 { margin: 0; font-family: var(--font-display, inherit); font-size: var(--sc-t-section, 1.75rem); line-height: 1.15; color: var(--ink); text-wrap: balance; }
+.dm-lede { margin: 0; color: var(--ink-2); max-width: 46ch; }
+.dm-picker { display: grid; gap: .8rem; }
+.dm-line-title { margin: 0 0 .35rem; font-size: var(--sc-t-meta); letter-spacing: var(--sc-track-meta); text-transform: uppercase; color: var(--ink-3); }
+.dm-chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.dm-chips button { min-height: 36px; padding: .4rem .7rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg, #101212); color: var(--ink-2); font-size: var(--sc-t-control); cursor: pointer; transition: border-color .15s ease, color .15s ease, background-color .15s ease; }
+@media (hover: hover) { .dm-chips button:hover { border-color: var(--copper); color: var(--ink); } .pm li a:hover { background: var(--surface-2); } }
+.dm-chips button[aria-pressed='true'] { border-color: var(--copper); color: var(--ink); background: var(--surface-2); }
+.dm-chips button:focus-visible, .dm-motion:focus-visible, .dm-links a:focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
+.dm-readout { display: grid; gap: .45rem; padding-top: 1rem; border-top: 1px solid var(--line-soft); }
+.dm-product { margin: 0; font-family: var(--font-display, inherit); font-size: 1.35rem; color: var(--ink); }
+.dm-runs { margin: 0; color: var(--ink-2); font-size: var(--sc-t-control); }
+.dm-domains { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem .9rem; }
+.dm-domains li { color: var(--ink-2); font-size: var(--sc-t-control); }
+.dm-domains strong { color: var(--copper); font-weight: 600; font-variant-numeric: tabular-nums; margin-right: .2rem; }
+.dm-links { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin: .25rem 0 0; }
+.dm-links a { display: inline-flex; align-items: center; gap: .3rem; min-height: 32px; color: var(--copper); font-size: var(--sc-t-control); }
+.dm-compact { margin: 2.5rem 0; }
+.dm-compact .dm-stage { min-height: 320px; }
+@media (max-width: 900px) {
+  .dm { grid-template-columns: 1fr; }
+  .dm-stage { min-height: 300px; }
+  .dm-stage-note { right: 1rem; bottom: 3.2rem; }
+}
+@media (prefers-reduced-motion: reduce) { .dm-chips button { transition: none; } }
+
+/* Portfolio map (app/portfolio-map.tsx): a ranked dot plot, one row per product. */
+.pm { margin: 0 0 2.5rem; padding: clamp(1rem, 2vw, 1.5rem); border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.pm-head h2 { margin: 0 0 .35rem; font-family: var(--font-display, inherit); font-size: var(--sc-t-section, 1.75rem); color: var(--ink); }
+.pm-head p { margin: 0; color: var(--ink-2); max-width: 70ch; font-size: var(--sc-t-control); }
+.pm-legend { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: .9rem 0 .25rem; color: var(--ink-3); font-size: var(--sc-t-meta); }
+.pm-legend span { display: inline-flex; align-items: center; gap: .4rem; }
+.pm-legend .pm-dot { position: static; translate: none; width: 12px; height: 12px; }
+.pm-line { margin-top: 1.25rem; }
+.pm-line h3 { margin: 0 0 .35rem; font-size: var(--sc-t-control); font-weight: 600; color: var(--ink); }
+.pm-line h3 span { font-weight: 400; color: var(--ink-3); margin-left: .4rem; font-variant-numeric: tabular-nums; }
+.pm ol { list-style: none; margin: 0; padding: 0; }
+.pm li a { display: grid; grid-template-columns: minmax(9rem, 13rem) minmax(0, 1fr) 6.5rem minmax(0, 17rem); align-items: center; gap: .9rem; min-height: 40px; padding: .15rem .5rem; margin-inline: -.5rem; border-radius: 6px; color: var(--ink); }
+.pm li a:focus-visible { outline: 2px solid var(--copper); outline-offset: 1px; }
+.pm-name { font-size: var(--sc-t-control); }
+.pm-track { position: relative; height: 26px; }
+.pm-track::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line-soft); }
+.pm-stem { position: absolute; left: 0; top: 50%; height: 2px; translate: 0 -50%; background: var(--line); }
+.pm-dot { position: absolute; top: 50%; translate: -50% -50%; border-radius: 50%; background: var(--copper); display: inline-block; }
+.pm-value { font-variant-numeric: tabular-nums; text-align: right; font-size: var(--sc-t-control); color: var(--ink); }
+.pm-meta { color: var(--ink-3); font-size: var(--sc-t-meta); font-variant-numeric: tabular-nums; }
+@media (max-width: 900px) {
+  .pm li a { grid-template-columns: minmax(0, 1fr) 5.5rem; grid-template-areas: 'name value' 'track track' 'meta meta'; gap: .2rem .75rem; padding-block: .5rem; }
+  .pm-name { grid-area: name; } .pm-value { grid-area: value; } .pm-track { grid-area: track; } .pm-meta { grid-area: meta; }
+}
+
+/* Proof ladder (technology.tsx, Measured chapter). Solid: measured. Outlined: design target. Dashed: ahead. */
+.ladder { margin: 0 0 1.5rem; }
+.ladder-caption { margin: 0 0 1rem; font-size: var(--sc-t-control); color: var(--ink-2); }
+.ladder ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; position: relative; }
+.ladder ol::before { content: ''; position: absolute; left: 22px; right: 22px; top: 21px; height: 2px; background: repeating-linear-gradient(90deg, var(--line) 0 8px, transparent 8px 14px); }
+/* solid to halfway between steps 1 and 2: today is past the FPGA stage, not at the ASIC one */
+.ladder ol::after { content: ''; position: absolute; left: 22px; width: calc(12.5% + .25rem); top: 21px; height: 2px; background: var(--copper); }
+.ladder-step { position: relative; display: grid; gap: .4rem; align-content: start; padding: 3.4rem 1rem 1.1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.ladder-node { position: absolute; top: 4px; left: 4px; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--bg, #101212); border: 2px solid var(--line); color: var(--ink-3); font-variant-numeric: tabular-nums; font-size: var(--sc-t-control); z-index: 1; }
+.ladder-step.is-measured .ladder-node { background: var(--copper); border-color: var(--copper); color: #15120e; }
+.ladder-step.is-target .ladder-node { border-color: var(--copper); color: var(--copper); }
+.ladder-step.is-ahead { border-style: dashed; }
+.ladder-status { margin: 0; font-size: var(--sc-t-meta); letter-spacing: var(--sc-track-meta); text-transform: uppercase; color: var(--ink-3); }
+.ladder-step.is-measured .ladder-status, .ladder-step.is-target .ladder-status { color: var(--copper); }
+.ladder-step h3 { margin: 0; font-size: 1.05rem; color: var(--ink); }
+.ladder-what { margin: 0; color: var(--ink-2); font-size: var(--sc-t-control); line-height: 1.5; }
+.ladder dl { margin: .35rem 0 0; display: grid; gap: .55rem; }
+.ladder dt { font-family: var(--font-display, inherit); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ladder dd { margin: 0; color: var(--ink-3); font-size: var(--sc-t-meta); line-height: 1.45; }
+.ladder-here { margin: .4rem 0 0; justify-self: start; padding: .2rem .55rem; border-radius: 4px; background: var(--surface-2); color: var(--ink); font-size: var(--sc-t-meta); }
+@media (max-width: 900px) {
+  .ladder ol { grid-template-columns: 1fr; }
+  .ladder ol::before, .ladder ol::after { display: none; }
+  .ladder-step { padding-top: 1rem; padding-left: 3.6rem; }
+  .ladder-node { top: 1rem; left: .9rem; }
+}
+
+/* Milestone Gantt (investment.tsx): the four windows on one 18-month axis; titles in a column, bars on the track. */
+.gantt { margin: 0 0 1.75rem; display: grid; gap: .5rem; }
+.gantt-row { display: grid; grid-template-columns: minmax(12rem, 19rem) minmax(0, 1fr); gap: 1rem; align-items: center; min-height: 48px; }
+.gantt-axis-row { min-height: 24px; }
+.gantt-axis { position: relative; height: 24px; border-bottom: 1px solid var(--line); }
+.gantt-axis span { position: absolute; bottom: 4px; translate: -50% 0; font-size: var(--sc-t-meta); color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gantt-axis span:first-child { translate: 0 0; }
+.gantt-axis span:last-child { translate: -100% 0; }
+.gantt-label { display: grid; gap: .1rem; }
+.gantt-label strong { font-size: var(--sc-t-control); color: var(--ink); font-weight: 600; }
+.gantt-label span { font-size: var(--sc-t-meta); color: var(--ink-3); }
+.gantt-track { position: relative; height: 22px; background: repeating-linear-gradient(90deg, var(--line-soft) 0 1px, transparent 1px calc(100% / 6)); border-radius: 4px; }
+.gantt-bar { position: absolute; top: 0; bottom: 0; border-radius: 4px; background: var(--line); }
+.gantt-bar.is-silicon { background: var(--copper); }
+@media (max-width: 700px) {
+  .gantt-row { grid-template-columns: 1fr; gap: .35rem; }
+  .gantt-axis-row > span:first-child { display: none; }
+}

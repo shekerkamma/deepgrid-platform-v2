@@ -203,6 +203,7 @@ export function SitePage({ view: pageView, product: productId, page: pageId, cha
             product={product}
             go={go}
             back={() => setProduct(null)}
+            reduced={reduced}
           />
         )}
         {view === 'portfolio' && !product && (

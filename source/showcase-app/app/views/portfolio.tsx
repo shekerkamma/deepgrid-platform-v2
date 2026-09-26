@@ -1,4 +1,5 @@
 'use client';
+import { PortfolioMap } from '../portfolio-map';
 import { useMemo, useState } from 'react';
 import { ArrowRight, ArrowUpDown, Search } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -152,6 +153,7 @@ export default function Portfolio({
         title="Fifteen products, one die"
         copy="Four product lines on the same silicon. Open a product for what it is used for, the product running in its films and slides, how it makes money, and the documents behind every figure."
       />
+      <PortfolioMap open={open} />
       <div className="filter-line">
         <Tabs value={category} onValueChange={(v) => setCategory(String(v))}>
           <TabsList className="filters">

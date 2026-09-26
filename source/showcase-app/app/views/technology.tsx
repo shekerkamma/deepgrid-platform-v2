@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowLeft, ArrowRight, Layers } from 'lucide-react';
 import Silicon from '../silicon';
+import { DieMap } from '../die-map';
 import {
   SectionHead,
   Scene,
@@ -61,6 +62,52 @@ const stages = [
   ],
 ];
 const allFilms = [...films, ...siliconFilms];
+
+// The four stages of proof as a ladder, with each figure standing on the stage that can prove it. Only the FPGA stage
+// has a measurement (deepgridsemi.com/products/dg-a100, "Measured Prototype Pipeline Performance": 0.02 ms capture +
+// 35.86 ms compute + 0.08 ms display = 35.96 ms latency, and 28.12 FPS throughput, which can exceed 1/latency when the
+// stages overlap); the ASIC figures are this chapter's own pills, which it
+// calls management figures derived from architecture, not measurements. Today sits between the first two steps:
+// the round takes SoC2 "from a working FPGA to qualified silicon" (Investors).
+const LADDER: { status: 'measured' | 'target' | 'ahead'; label: string; figures: [string, string][] }[] = [
+  { status: 'measured', label: 'Measured', figures: [['35.96 ms', 'end-to-end latency per frame: SSD-MobileNet, edge detection, Harris corner, optical flow'], ['28.12 FPS', 'real-time throughput of the same pipeline']] },
+  { status: 'target', label: 'Design targets, to verify', figures: [['8.6 ms', 'claimed processing slice of a 33.3 ms frame'], ['34.4 / 39.3 TOPS', 'arithmetic peak, 56 and 64 cores at 600 MHz']] },
+  { status: 'ahead', label: 'Ahead', figures: [] },
+  { status: 'ahead', label: 'Ahead', figures: [] },
+];
+function ProofLadder() {
+  return (
+    <figure className="ladder" aria-labelledby="ladder-title">
+      <figcaption id="ladder-title" className="ladder-caption">
+        What is measured today, and what each stage still has to prove
+      </figcaption>
+      <ol>
+        {stages.map(([t, d], i) => {
+          const s = LADDER[i];
+          return (
+            <li key={t} className={'ladder-step is-' + s.status}>
+              <span className="ladder-node" aria-hidden="true">{i + 1}</span>
+              <p className="ladder-status">{s.label}</p>
+              <h3>{t}</h3>
+              <p className="ladder-what">{d}</p>
+              {s.figures.length > 0 && (
+                <dl>
+                  {s.figures.map(([v, l]) => (
+                    <div key={v}>
+                      <dt>{nb(v)}</dt>
+                      <dd>{l}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+              {i === 0 && <p className="ladder-here">Today: a working FPGA</p>}
+            </li>
+          );
+        })}
+      </ol>
+    </figure>
+  );
+}
 const slideName = (n: number) => {
   const t = slideNotes[n - 1]?.title || '';
   return t.includes(' · ') ? t.split(' · ').slice(1).join(' · ') : t;
@@ -347,13 +394,7 @@ function Showing({
     case 'measured':
       return (
         <>
-          <ol className="pp-steps" aria-label="Stages of proof">
-            {stages.map(([t, d]) => (
-              <li key={t}>
-                <strong>{t}</strong> {d}
-              </li>
-            ))}
-          </ol>
+          <ProofLadder />
           <FilmRow ids={['roadmap']} />
         </>
       );
@@ -601,13 +642,7 @@ export default function Technology({
           'One 28 nm chip, SoC2, carries the whole portfolio. Seven short chapters on what it is, why it is built this way, and what still has to be proven. The chip is not yet fabricated: its figures are design targets and derivations.',
         )}
       />
-      <figure className="tech-hero-scene">
-        <Scene id="die" sizes="(min-width: 1200px) 1140px, 100vw" eager />
-        <figcaption>
-          SoC2 as it is meant to ship. Concept render, not the floorplan;
-          39.3&nbsp;TOPS is a design target.
-        </figcaption>
-      </figure>
+      <DieMap reduced={reduced} go={go} />
       <ol className="tech-cards" aria-label="Silicon chapters">
         {story.chapters.map((c, n) => (
           <li key={c.id}>

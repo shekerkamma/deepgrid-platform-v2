@@ -201,6 +201,7 @@ export default function Investment({
             withheld if the one before it fails.
           </p>
         </header>
+        <MilestoneGantt />
         <figure className="inv-timeline" aria-label="18-month milestone timeline">
           <ol className="inv-milestones">
             {milestones.map((m, idx) => (
@@ -503,6 +504,45 @@ function InvestmentRecord({
           </button>
         )}
       </nav>
+    </div>
+  );
+}
+
+// The four milestone windows on one 18-month axis, so "when is this real?" is answered at a glance. Months count from
+// the raise (the memorandum gives windows, not calendar dates). The silicon window carries the 79-day TSMC 28 nm fab
+// cycle from the partner contract (About: Muse Semi / GSME).
+function MilestoneGantt() {
+  const span = (when: string) => {
+    const [a, b] = when.match(/\d+/g)!.map(Number);
+    return [a === 1 ? 0 : a, b] as const;
+  };
+  const note: Record<string, string> = {
+    'Silicon returns': 'TSMC 28\u00a0nm first silicon; 79-day fab cycle',
+  };
+  return (
+    <div className="gantt" role="img" aria-label={milestones.map((m) => `${m.when}: ${m.title}`).join('; ')}>
+      <div className="gantt-row gantt-axis-row" aria-hidden="true">
+        <span />
+        <div className="gantt-axis">
+          {[0, 3, 6, 12, 18].map((t) => (
+            <span key={t} style={{ left: `${(t / 18) * 100}%` }}>{t === 0 ? 'Raise' : `${t} mo`}</span>
+          ))}
+        </div>
+      </div>
+      {milestones.map((m, i) => {
+        const [a, b] = span(m.when);
+        return (
+          <div key={m.when} className="gantt-row" aria-hidden="true">
+            <div className="gantt-label">
+              <strong>{m.title}</strong>
+              <span>{m.when}{note[m.title] ? ' · ' + note[m.title] : ''}</span>
+            </div>
+            <div className="gantt-track">
+              <div className={'gantt-bar' + (i === 2 ? ' is-silicon' : '')} style={{ left: `${(a / 18) * 100}%`, width: `${((b - a) / 18) * 100}%` }} />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
