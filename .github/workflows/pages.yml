@@ -1,4 +1,4 @@
-name: Build and deploy showcase
+name: Build and deploy DeepGrid Platform v2
 on:
   push:
     branches: [main]
@@ -33,10 +33,10 @@ jobs:
       - name: Serve the build
         run: |
           mkdir -p "$RUNNER_TEMP/srv"
-          ln -s "$PWD/dist/pages" "$RUNNER_TEMP/srv/deepgrid-platform-showcase"
+          ln -s "$PWD/dist/pages" "$RUNNER_TEMP/srv/deepgrid-platform-v2"
           python3 -m http.server 8771 --directory "$RUNNER_TEMP/srv" >/dev/null 2>&1 &
-          until curl -sf http://127.0.0.1:8771/deepgrid-platform-showcase/ >/dev/null; do sleep 1; done
-      - run: npm run verify -- http://127.0.0.1:8771/deepgrid-platform-showcase/ verify-shots
+          until curl -sf http://127.0.0.1:8771/deepgrid-platform-v2/ >/dev/null; do sleep 1; done
+      - run: npm run verify -- http://127.0.0.1:8771/deepgrid-platform-v2/ verify-shots
       - if: failure()
         uses: actions/upload-artifact@v4
         with:
@@ -68,7 +68,7 @@ jobs:
       run:
         working-directory: source/showcase-app
     env:
-      SITE: https://shekerkamma.github.io/deepgrid-platform-showcase/
+      SITE: https://shekerkamma.github.io/deepgrid-platform-v2/
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v4

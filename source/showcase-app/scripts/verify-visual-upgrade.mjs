@@ -4,7 +4,7 @@ import { chromium } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 const base =
-  process.argv[2] || 'http://127.0.0.1:8771/deepgrid-platform-showcase/';
+  process.argv[2] || 'http://127.0.0.1:8771/deepgrid-platform-v2/';
 const out = process.argv[3] || 'visual-upgrade-shots';
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({

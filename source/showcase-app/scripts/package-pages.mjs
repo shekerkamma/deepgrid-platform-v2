@@ -3,7 +3,8 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source=path.join(root,'dist/client'), output=path.join(root,'dist/pages');
-const base='/deepgrid-platform-showcase/';
+// The Pages path prefix. deepgrid-platform-v2 is a separate site from the original showcase.
+const base=process.env.PAGES_BASE||'/deepgrid-platform-v2/';
 fs.rmSync(output,{recursive:true,force:true});
 fs.cpSync(source,output,{recursive:true});
 // Vite's preload map lists deps as "_next/static/..." and its URL builder prepends "/", so those need the

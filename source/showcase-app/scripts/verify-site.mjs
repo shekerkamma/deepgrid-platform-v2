@@ -28,7 +28,7 @@ import { mkdirSync } from 'node:fs';
 const pw = await import(process.env.PLAYWRIGHT || 'playwright');
 const { chromium } = pw.chromium ? pw : pw.default;
 const BASE =
-  process.argv[2] || 'http://127.0.0.1:8771/deepgrid-platform-showcase/';
+  process.argv[2] || 'http://127.0.0.1:8771/deepgrid-platform-v2/';
 const OUT = process.argv[3] || 'verify-shots';
 mkdirSync(OUT, { recursive: true });
 const b = await chromium.launch({

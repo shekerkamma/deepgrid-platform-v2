@@ -10,7 +10,7 @@ import './ask.css';
 import './site.css';
 import './showcase-refinement.css';
 
-const site = 'https://shekerkamma.github.io/deepgrid-platform-showcase/';
+const site = 'https://shekerkamma.github.io/deepgrid-platform-v2/';
 export const metadata: Metadata = {
   title: 'DeepGrid Semi: one silicon, fifteen products',
   description:
