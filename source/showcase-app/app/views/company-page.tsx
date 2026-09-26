@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { ArrowRight, ArrowUpRight, Mail, MapPin } from 'lucide-react';
 import { SectionHead } from '../shared';
 import { films, Player } from './films';
+import { explainers } from './explainers';
 import type { CompanyPage, Person, Section } from '../company-pages';
 
 // Scenes are concept renders; posters are stills from DeepGrid's simulators; the rest are illustrations.
@@ -188,6 +189,52 @@ function Block({ s }: { s: Section }) {
       );
     case 'contact':
       return <ContactBlock />;
+    case 'roster':
+      return (
+        <section className="cp-sec">
+          <header className="cp-sec-head">
+            {s.kicker && <p className="kicker">{s.kicker}</p>}
+            <h2>{s.title}</h2>
+            {s.lede && <p className="cp-lede">{s.lede}</p>}
+          </header>
+          <div className="cp-roster">
+            {s.groups.map((g) => (
+              <div key={g.title} className="cp-card">
+                <h3>{g.title} <span className="cp-count">{g.people.length}</span></h3>
+                <ul>{g.people.map(([n, r]) => <li key={n}><strong>{n}</strong><span>{r}</span></li>)}</ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    case 'films':
+      return (
+        <section className="cp-sec">
+          <header className="cp-sec-head">
+            {s.kicker && <p className="kicker">{s.kicker}</p>}
+            <h2>{s.title}</h2>
+            {s.lede && <p className="cp-lede">{s.lede}</p>}
+          </header>
+          <div className={'cp-films' + (s.ids.length > 1 ? ' cp-films-multi' : '')}>
+            {s.ids.map((id) => [...films, ...explainers].find((f) => f.id === id)).filter((f) => !!f).map((f) => (
+              <figure key={f.id} className="cp-film">
+                <Player film={f} />
+                <figcaption><strong>{f.title}</strong><span>{f.sub} · {f.length}</span></figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      );
+    case 'bullets':
+      return (
+        <section className="cp-sec">
+          <header className="cp-sec-head">
+            {s.kicker && <p className="kicker">{s.kicker}</p>}
+            <h2>{s.title}</h2>
+          </header>
+          <ul className="cp-bullets">{s.items.map((t) => <li key={t}>{t}</li>)}</ul>
+        </section>
+      );
     case 'cta':
       return (
         <section className="cp-sec cp-cta">
@@ -198,12 +245,17 @@ function Block({ s }: { s: Section }) {
           </div>
         </section>
       );
+    default: {
+      // A kind added to Section without a case here fails the type check instead of rendering nothing.
+      const missing: never = s;
+      return missing;
+    }
   }
 }
 
 export default function CompanyPageView({ page }: { page: CompanyPage }) {
   return (
-    <div className="page-wrap cp-page">
+    <div className="page-wrap cp-page" data-sections={page.sections.length}>
       <SectionHead kicker={page.kicker} title={page.title} copy={page.lede} />
       {(page.heroImage || page.chips) && (
         <div className={'cp-hero' + (page.heroImage ? '' : ' cp-hero-solo')}>

@@ -447,6 +447,26 @@ for (const { tag, viewport } of [
   await p.close();
 }
 
+// 3b-2. Software / Use Cases / About / Contact: every declared section renders. A renderer deleted from
+// company-page.tsx once blanked the team roster, the achievements and the use-case films with every gate green.
+{
+  const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+  const pages = ['software/dgrid-sdk', 'use-cases/adas', 'use-cases/humanoids', 'use-cases/mobility', 'use-cases/robotics', 'about', 'about/team', 'about/recognition', 'contact'];
+  let n = 0;
+  for (const r of pages) {
+    await p.goto(BASE + r, { waitUntil: 'networkidle' });
+    const m = await p.evaluate(() => {
+      const root = document.querySelector('.cp-page');
+      return { declared: Number(root?.getAttribute('data-sections') || -1), rendered: root ? root.querySelectorAll(':scope > .cp-sec').length : 0,
+        empty: root ? [...root.querySelectorAll(':scope > .cp-sec')].filter((x) => !x.textContent.trim() && !x.querySelector('img,video')).length : 0 };
+    });
+    if (m.declared < 1 || m.rendered !== m.declared || m.empty) fail(`${r}: ${m.rendered} of ${m.declared} sections rendered, ${m.empty} empty`);
+    n += m.rendered;
+  }
+  console.log(`company pages: ${pages.length} pages, ${n} sections, all rendered`);
+  await p.close();
+}
+
 // 3c. technology, told in chapters like the Overview: every chapter is named in the chapter nav, has a verdict headline, a lede, 3 to 6
 // pills, technical detail and at least one reference, and every reference is labelled (never a bare verb) and goes
 // somewhere: deck slides open in the deck, memorandum pages as PDFs that exist.

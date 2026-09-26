@@ -1,0 +1,154 @@
+WEBVTT
+
+00:00:00.120 --> 00:00:01.760
+A humanoid robot has
+
+00:00:01.760 --> 00:00:02.480
+to see,
+
+00:00:02.480 --> 00:00:04.400
+decide and move in
+
+00:00:04.400 --> 00:00:06.080
+one continuous loop,
+
+00:00:06.080 --> 00:00:07.440
+fast enough to work
+
+00:00:07.440 --> 00:00:09.220
+beside people.
+
+00:00:09.220 --> 00:00:10.320
+This is that loop
+
+00:00:10.320 --> 00:00:13.789
+on Deepgrid's humanoid platform.
+
+00:00:13.789 --> 00:00:15.649
+It starts with perception.
+
+00:00:15.649 --> 00:00:17.789
+Several sensors are fused
+
+00:00:17.789 --> 00:00:19.249
+into one three-dimensional
+
+00:00:19.249 --> 00:00:21.129
+picture of the room,
+
+00:00:21.129 --> 00:00:22.689
+objects are recognised,
+
+00:00:22.689 --> 00:00:24.149
+and depth is measured
+
+00:00:24.149 --> 00:00:25.529
+in real time,
+
+00:00:25.529 --> 00:00:28.481
+thirty frames every second.
+
+00:00:28.481 --> 00:00:30.521
+Interpretation turns that picture
+
+00:00:30.521 --> 00:00:31.581
+into meaning.
+
+00:00:31.581 --> 00:00:33.401
+The system reasons about
+
+00:00:33.401 --> 00:00:34.261
+context,
+
+00:00:34.261 --> 00:00:36.061
+decides what matters,
+
+00:00:36.061 --> 00:00:37.161
+and understands a command
+
+00:00:37.161 --> 00:00:39.531
+spoken in plain language.
+
+00:00:39.531 --> 00:00:41.831
+Planning comes next.
+
+00:00:41.831 --> 00:00:43.051
+The task is broken
+
+00:00:43.051 --> 00:00:44.151
+into steps,
+
+00:00:44.151 --> 00:00:45.631
+and each motion is
+
+00:00:45.631 --> 00:00:47.211
+planned before a single
+
+00:00:47.211 --> 00:00:48.936
+joint moves.
+
+00:00:48.936 --> 00:00:50.736
+Then action.
+
+00:00:50.736 --> 00:00:52.696
+Motor control drives seven
+
+00:00:52.696 --> 00:00:54.396
+degrees of freedom with
+
+00:00:54.396 --> 00:00:55.936
+sub-millimetre precision,
+
+00:00:55.936 --> 00:00:58.916
+while motion-control AI keeps
+
+00:00:58.916 --> 00:01:00.716
+the robot balanced as
+
+00:01:00.716 --> 00:01:02.036
+it walks.
+
+00:01:02.036 --> 00:01:03.556
+An operator can take
+
+00:01:03.556 --> 00:01:04.716
+over remotely,
+
+00:01:04.716 --> 00:01:06.176
+and the platform keeps
+
+00:01:06.176 --> 00:01:07.616
+learning from real-world
+
+00:01:07.616 --> 00:01:08.838
+video.
+
+00:01:08.838 --> 00:01:09.498
+Perception,
+
+00:01:09.498 --> 00:01:10.698
+interpretation,
+
+00:01:10.698 --> 00:01:11.278
+planning,
+
+00:01:11.278 --> 00:01:11.938
+action.
+
+00:01:11.938 --> 00:01:13.158
+One pipeline,
+
+00:01:13.158 --> 00:01:15.638
+from silicon to motion.
+
+00:01:15.638 --> 00:01:16.418
+What you have seen
+
+00:01:16.418 --> 00:01:17.318
+is an illustration
+
+00:01:17.318 --> 00:01:18.938
+of that pipeline,
+
+00:01:18.938 --> 00:01:20.278
+not recorded footage.

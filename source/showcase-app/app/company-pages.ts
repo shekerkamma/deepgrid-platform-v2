@@ -142,6 +142,7 @@ export const companyPages: CompanyPage[] = [
           { title: 'Multi-Robot Collaboration', text: 'Coordinated task execution with swarm intelligence and distributed decision-making' },
           { title: 'General Purpose AI', text: 'Adaptive learning for diverse tasks without task-specific programming' },
         ] },
+      { kind: 'films', kicker: 'See it explained', title: 'From perception to action, in 80 seconds', lede: 'An animated illustration of the pipeline above, narrated. It is not footage of a robot.', ids: ['humanoid'], from: 'showcase explainer, built from this page' },
       { kind: 'cta', title: 'Build the Future of Humanoid Robotics', lede: 'Partner with Deepgrid to bring intelligent humanoid robots to life', from: REF + '/use-cases/humanoids',
         actions: [ { label: 'Collaborate with us', href: 'contact', primary: true }, { label: 'DGrid SDK', href: 'software/dgrid-sdk' } ] },
     ],
