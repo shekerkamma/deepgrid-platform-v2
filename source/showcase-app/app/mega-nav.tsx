@@ -9,6 +9,7 @@ import { products, groups } from './shared';
 import story from './data/tech-story.json';
 import { to, BASE } from './routes';
 import { companyPages } from './company-pages';
+import { CHANNEL } from './resources';
 
 type Item = { label: string; href: string; note?: string };
 type Menu = { id: string; label: string; views: string[]; columns: { title?: string; items: Item[] }[] };
@@ -62,13 +63,17 @@ menus.push(
   { id: 'software', label: 'Software', views: ['software'], columns: [{ items: fromPages('software') }] },
   { id: 'usecases', label: 'Use Cases', views: ['usecases'], columns: [{ items: fromPages('usecases') }] },
   { id: 'about', label: 'About', views: ['about'], columns: [{ items: fromPages('about') }] },
+  {
+    id: 'resources', label: 'Resources', views: ['resources', 'film'],
+    columns: [{ items: [...fromPages('resources'), { label: 'Simulations & walkthrough', href: to('film'), note: 'Product lines in their simulators, the silicon films and the 104-slide walkthrough' }, { label: 'YouTube channel ↗', href: CHANNEL, note: 'Every DeepGrid Semi video, on YouTube' }] }],
+  },
 );
 
 /** The menu in the reference site's order: dropdowns and plain links interleaved. */
 type Entry = { menu: string } | { view: string; label: string; href: string };
 const order: Entry[] = [
   { menu: 'products' }, { menu: 'silicon' }, { menu: 'software' }, { menu: 'usecases' }, { menu: 'investors' },
-  { view: 'film', label: 'Demonstrations', href: to('film') },
+  { menu: 'resources' },
   { menu: 'about' },
   { view: 'contact', label: 'Contact', href: BASE + 'contact' },
 ];
@@ -153,7 +158,7 @@ export function MegaNav({ view, onNavigate, label = 'Primary navigation' }: { vi
                   <ul>
                     {col.items.map((it) => (
                       <li key={it.href}>
-                        <a href={it.href} onClick={() => { setOpen(null); onNavigate?.(); }}>
+                        <a href={it.href} onClick={() => { setOpen(null); onNavigate?.(); }} {...(/^https?:/.test(it.href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
                           <span>{it.label}</span>
                           {it.note && <small>{it.note}</small>}
                         </a>

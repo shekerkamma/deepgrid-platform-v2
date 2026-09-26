@@ -451,7 +451,7 @@ for (const { tag, viewport } of [
 // company-page.tsx once blanked the team roster, the achievements and the use-case films with every gate green.
 {
   const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
-  const pages = ['software/dgrid-sdk', 'use-cases/adas', 'use-cases/humanoids', 'use-cases/mobility', 'use-cases/robotics', 'about', 'about/team', 'about/recognition', 'contact'];
+  const pages = ['software/dgrid-sdk', 'use-cases/adas', 'use-cases/humanoids', 'use-cases/mobility', 'use-cases/robotics', 'about', 'about/team', 'about/recognition', 'contact', 'resources/docs', 'resources/videos'];
   let n = 0;
   for (const r of pages) {
     await p.goto(BASE + r, { waitUntil: 'networkidle' });

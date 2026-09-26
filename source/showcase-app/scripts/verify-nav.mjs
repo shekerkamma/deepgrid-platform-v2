@@ -37,7 +37,11 @@ async function landed(p, want, via) {
   for (const id of menus) {
     await p.goto(BASE + 'contact', { waitUntil: 'networkidle' });
     const hrefs = await p.$$eval(`#${id} a`, (as) => as.map((a) => a.href));
+    for (const [href, target] of await p.$$eval(`#${id} a`, (as) => as.map((a) => [a.href, a.target])))
+      if (new URL(href).origin !== new URL(BASE).origin && (!/^https:\/\/(www\.)?youtube\.com\/@DeepgridSemi/.test(href) || target !== '_blank'))
+        fail(`menu ${id}: external link ${href} (target ${target || 'self'})`);
     for (let i = 0; i < hrefs.length; i++) {
+      if (new URL(hrefs[i]).origin !== new URL(BASE).origin) continue; // external: checked above, not followed
       if (i) await p.goto(BASE + 'contact', { waitUntil: 'networkidle' });
       const btn = p.locator(`[aria-controls="${id}"]`).first();
       const bb = await btn.boundingBox();
@@ -100,9 +104,10 @@ async function landed(p, want, via) {
   const groups = await p.$$eval('.navigation-sheet .mega-trigger', (xs) => xs.map((x) => x.getAttribute('aria-controls')));
   let n = 0;
   for (const href of items) {
+    if (new URL(href).origin !== new URL(BASE).origin) continue;
     await p.goto(BASE, { waitUntil: 'networkidle' });
     await p.click('[aria-label="Open navigation"]');
-    const sel = `.navigation-sheet a[href="${new URL(href).pathname}"]`;
+    const sel = `.navigation-sheet a[href="${new URL(href).pathname}"]`; // same-site only
     const a = p.locator(sel).first();
     if (!(await a.isVisible())) {
       const panel = await a.evaluate((el) => el.closest('.mega-panel')?.id).catch(() => null);
@@ -114,7 +119,7 @@ async function landed(p, want, via) {
     await landed(p, path(href), 'phone ' + path(href));
     n++;
   }
-  console.log(`phone sheet: ${groups.length} groups, ${n}/${items.length} links followed`);
+  console.log(`phone sheet: ${groups.length} groups, ${n}/${items.filter((h) => new URL(h).origin === new URL(BASE).origin).length} same-site links followed`);
   await p.close();
 }
 
@@ -125,7 +130,7 @@ async function landed(p, want, via) {
     'investors/portfolio-deck', 'demonstrations', 'software/dgrid-sdk', 'use-cases/adas', 'use-cases/humanoids', products[0]];
   const cap = (r) => r.split('/').map((s) => s[0].toUpperCase() + s.slice(1)).join('/');
   const variants = routes.flatMap((r) => [[cap(r), r], [r + '/', r], [r + '.html', r], [r.toUpperCase(), r]]);
-  variants.push(['use-cases', 'use-cases/adas'], ['software', 'software/dgrid-sdk'], ['Use-Cases/', 'use-cases/adas'], ['silicon/', 'silicon']);
+  variants.push(['resources', 'resources/docs'], ['Resources/Videos', 'resources/videos'], ['use-cases', 'use-cases/adas'], ['software', 'software/dgrid-sdk'], ['Use-Cases/', 'use-cases/adas'], ['silicon/', 'silicon']);
   const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
   const base = path(BASE);
   for (const [typed, want] of variants) {

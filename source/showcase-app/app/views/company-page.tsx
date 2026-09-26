@@ -3,14 +3,18 @@
 // look: the showcase's SectionHead, its tokens, and a small set of section shapes taken from
 // deepgridsemi.com's templates (split, card grid, steps, stats, people, figures, contact, CTA).
 import { useState } from 'react';
-import { ArrowRight, ArrowUpRight, Mail, MapPin } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, BookOpen, Boxes, Check, Cpu, Download, Film, Gauge, Hand, Layers, Library, Loader, Mail, MapPin, Mic, Play, ScanEye, SlidersHorizontal, Terminal } from 'lucide-react';
+import type { FlowStep } from '../company-pages';
 import { SectionHead } from '../shared';
 import { films, Player } from './films';
 import { explainers } from './explainers';
+import { CHANNEL, type Video } from '../resources';
 import type { CompanyPage, Person, Section } from '../company-pages';
 
-// Scenes are concept renders; posters are stills from DeepGrid's simulators; the rest are illustrations.
-const captionFor = (src: string) => (src.includes('/scenes/') ? 'Concept render' : src.includes('/posters/') ? 'Simulation still' : 'Illustration');
+// Scenes are concept renders; posters are stills from DeepGrid's simulators; apexgrid-* are stills from the
+// company's own video; the rest are illustrations.
+const captionFor = (src: string) =>
+  src.includes('/apexgrid') ? 'Stills from DeepGrid Semi’s Apexgrid video' : src.includes('/scenes/') ? 'Concept render' : src.includes('/posters/') ? 'Simulation still' : 'Illustration';
 
 function Figure({ src, alt, className = '' }: { src: string; alt: string; className?: string }) {
   return (
@@ -104,11 +108,66 @@ function ContactBlock() {
   );
 }
 
+const ICONS = { layers: Layers, sliders: SlidersHorizontal, boxes: Boxes, cpu: Cpu, gauge: Gauge, terminal: Terminal, book: BookOpen, library: Library, check: Check, progress: Loader, eye: ScanEye, mic: Mic, hand: Hand, film: Film } as const;
+const Icon = ({ name, size = 18 }: { name?: string; size?: number }) => {
+  const C = name ? ICONS[name as keyof typeof ICONS] : undefined;
+  return C ? <C size={size} aria-hidden="true" /> : null;
+};
+
+// A pipeline drawn as connected stages; a pulse travels it once the section is on screen (still under reduced motion).
+function Flow({ steps, label }: { steps: FlowStep[]; label?: string }) {
+  return (
+    <figure className="cp-flow" aria-label={label}>
+      {label && <figcaption className="cp-meta">{label}</figcaption>}
+      <ol>
+        {steps.map((st, i) => (
+          <li key={st.label} style={{ ['--i' as string]: i }}>
+            <span className="cp-flow-icon"><Icon name={st.icon} size={20} /></span>
+            <span className="cp-flow-text"><strong>{st.label}</strong><small>{st.text}</small></span>
+          </li>
+        ))}
+      </ol>
+    </figure>
+  );
+}
+
+const mmss = (t: number) => `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`;
+
+// A YouTube video as a thumbnail until it is asked for: no third-party frame, cookie or autoplay before a click.
+function YouTube({ v }: { v: Video }) {
+  const [on, setOn] = useState(false);
+  return (
+    <figure className={'cp-yt' + (v.short ? ' is-short' : '')}>
+      <div className="cp-yt-frame">
+        {on ? (
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0`}
+            title={v.title}
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowFullScreen
+          />
+        ) : (
+          <button type="button" className="cp-yt-play" onClick={() => setOn(true)} aria-label={`Play ${v.title}${v.secs ? ', ' + mmss(v.secs) : ''}`}>
+            <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" width={480} height={360} />
+            <span className="cp-yt-btn"><Play size={16} fill="currentColor" aria-hidden="true" /></span>
+            {v.secs ? <em className="cp-yt-dur">{mmss(v.secs)}</em> : v.short ? <em className="cp-yt-dur">Short</em> : null}
+          </button>
+        )}
+      </div>
+      <figcaption>
+        <strong>{v.title}</strong>
+        {v.text && <span>{v.text}</span>}
+        <a className="cp-yt-link" href={`https://www.youtube.com/watch?v=${v.id}`} target="_blank" rel="noopener noreferrer">Watch on YouTube <ArrowUpRight size={12} aria-hidden="true" /></a>
+      </figcaption>
+    </figure>
+  );
+}
+
 function Block({ s }: { s: Section }) {
   switch (s.kind) {
     case 'split':
       return (
-        <section className={'cp-sec cp-split' + (s.image ? '' : ' cp-split-solo')}>
+        <section className={'cp-sec cp-split' + (s.image || s.flow ? '' : ' cp-split-solo')}>
           <div className="cp-split-text">
             {s.kicker && <p className="kicker">{s.kicker}</p>}
             <h2>{s.title}</h2>
@@ -116,6 +175,7 @@ function Block({ s }: { s: Section }) {
             {s.paras.map((p) => <p key={p}>{p}</p>)}
           </div>
           {s.image && <Figure src={s.image} alt={s.imageAlt || ''} />}
+          {s.flow && <Flow steps={s.flow} label={s.flowLabel} />}
         </section>
       );
     case 'cards':
@@ -131,6 +191,7 @@ function Block({ s }: { s: Section }) {
               const inner = (
                 <>
                   {c.image && <img className="cp-card-img" src={c.image} alt="" loading="lazy" decoding="async" />}
+                  {c.icon && <span className={'cp-card-icon is-' + c.icon}><Icon name={c.icon} /></span>}
                   {c.meta && <p className="cp-meta">{c.meta}</p>}
                   <h3>{c.title}</h3>
                   {c.text && <p>{c.text}</p>}
@@ -225,6 +286,74 @@ function Block({ s }: { s: Section }) {
           </div>
         </section>
       );
+    case 'videos':
+      return (
+        <section className="cp-sec">
+          <header className="cp-sec-head">
+            {s.kicker && <p className="kicker">{s.kicker}</p>}
+            <h2>{s.title}</h2>
+            {s.lede && <p className="cp-lede">{s.lede}</p>}
+          </header>
+          {s.groups.length > 1 && (
+            <nav className="film-navigation tech-nav cp-vnav" aria-label="Video groups">
+              {s.groups.map((g, i) => <a key={g.title} href={'#vg-' + i}>{g.title} <small>{g.videos.length}</small></a>)}
+              {s.shorts && <a href="#vg-shorts">Shorts <small>{s.shorts.reduce((n, g) => n + g.videos.length, 0)}</small></a>}
+            </nav>
+          )}
+          {s.groups.map((g, i) => (
+            <div key={g.title} className="cp-vgroup" id={s.groups.length > 1 ? 'vg-' + i : undefined}>
+              {s.groups.length > 1 && (
+                <header className="cp-vgroup-head">
+                  <h3>{g.title} <span className="cp-count">{g.videos.length} {g.videos.length === 1 ? 'video' : 'videos'}</span></h3>
+                  {g.lede && <p>{g.lede}</p>}
+                </header>
+              )}
+              <div className="cp-yts">{g.videos.map((v) => <YouTube key={v.id} v={v} />)}</div>
+            </div>
+          ))}
+          {s.shorts && (
+            <div className="cp-vgroup" id={s.groups.length > 1 ? 'vg-shorts' : undefined}>
+              <header className="cp-vgroup-head"><h3>Shorts</h3></header>
+              {s.shorts.map((g) => (
+                <div key={g.title}>
+                  {s.shorts!.length > 1 && <p className="cp-meta cp-shorts-title">{g.title}</p>}
+                  <div className="cp-yts cp-yts-short">{g.videos.map((v) => <YouTube key={v.id} v={v} />)}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          {s.channel && <p className="cp-actions"><a className="primary" href={CHANNEL} target="_blank" rel="noopener noreferrer">The DeepGrid Semi channel on YouTube <ArrowUpRight size={16} aria-hidden="true" /></a></p>}
+        </section>
+      );
+    case 'docs':
+      return (
+        <section className="cp-sec">
+          <div className="cp-docs">
+            {s.groups.map((g) => (
+              <article key={g.title} className="cp-card cp-docgroup">
+                <h2>{g.title}</h2>
+                <p>{g.lede}</p>
+                <ul>
+                  {g.items.map((d) => {
+                    const file = d.href?.endsWith('.pdf');
+                    const ask = d.href?.startsWith('mailto:');
+                    return (
+                      <li key={d.title} className={ask ? 'is-ask' : ''}>
+                        <a href={d.href} {...(file ? { download: '' } : {})}>
+                          <span className="cp-doc-t">{file ? <Download size={14} aria-hidden="true" /> : ask ? <Mail size={14} aria-hidden="true" /> : <ArrowRight size={14} aria-hidden="true" />}{d.title}</span>
+                          {d.note && <small>{d.note}</small>}
+                          {d.meta && <em>{d.meta}</em>}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </article>
+            ))}
+          </div>
+          <p className="cp-detail cp-docs-note">Documents marked “on request” are listed by deepgridsemi.com; they are shared on request rather than published.</p>
+        </section>
+      );
     case 'bullets':
       return (
         <section className="cp-sec">
@@ -259,7 +388,7 @@ export default function CompanyPageView({ page }: { page: CompanyPage }) {
       <SectionHead kicker={page.kicker} title={page.title} copy={page.lede} />
       {(page.heroImage || page.chips) && (
         <div className={'cp-hero' + (page.heroImage ? '' : ' cp-hero-solo')}>
-          {page.heroImage && <Figure className="cp-hero-img" src={page.heroImage.src} alt={page.heroImage.alt} />}
+          {page.heroImage && <Figure className={'cp-hero-img' + (page.heroImage.fit === 'natural' ? ' is-natural' : '')} src={page.heroImage.src} alt={page.heroImage.alt} />}
           {page.chips && (
             <ul className="cp-chips">
               {page.chips.map(([t, d]) => <li key={t}><strong>{t}</strong><span>{d}</span></li>)}

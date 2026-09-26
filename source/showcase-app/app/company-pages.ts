@@ -9,11 +9,13 @@
 // SDK access. Showcase additions are marked `from: 'showcase …'`.
 
 import { to } from './routes';
+import { V, videoGroups, shortGroups, docGroups, type VideoGroup, type DocGroup } from './resources';
 
-export type Card = { title: string; text?: string; image?: string; meta?: string; href?: string };
+export type Card = { title: string; text?: string; image?: string; meta?: string; href?: string; icon?: string };
+export type FlowStep = { label: string; text: string; icon: string };
 export type Person = { name: string; role: string; detail?: string; photo?: string; initials: string; bio?: string[] };
 export type Section =
-  | { kind: 'split'; kicker?: string; title: string; lede?: string; paras: string[]; image?: string; imageAlt?: string; from: string }
+  | { kind: 'split'; kicker?: string; title: string; lede?: string; paras: string[]; image?: string; imageAlt?: string; flow?: FlowStep[]; flowLabel?: string; from: string }
   | { kind: 'cards'; kicker?: string; title: string; lede?: string; cols: 2 | 3 | 4; items: Card[]; from: string }
   | { kind: 'steps'; kicker?: string; title: string; lede?: string; items: Card[]; from: string }
   | { kind: 'stats'; items: [string, string][]; from: string }
@@ -22,18 +24,20 @@ export type Section =
   | { kind: 'contact'; from: string }
   | { kind: 'roster'; kicker?: string; title: string; lede?: string; groups: { title: string; people: [string, string][] }[]; from: string }
   | { kind: 'films'; kicker?: string; title: string; lede?: string; ids: string[]; from: string }
+  | { kind: 'videos'; kicker?: string; title: string; lede?: string; groups: VideoGroup[]; shorts?: VideoGroup[]; channel?: boolean; from: string }
+  | { kind: 'docs'; groups: DocGroup[]; from: string }
   | { kind: 'bullets'; kicker?: string; title: string; items: string[]; from: string }
   | { kind: 'cta'; title: string; lede: string; actions: { label: string; href: string; primary?: boolean }[]; from: string };
 
 export type CompanyPage = {
   id: string;
-  menu: 'software' | 'usecases' | 'about' | 'contact';
+  menu: 'software' | 'usecases' | 'about' | 'contact' | 'resources';
   path: string;
   label: string;
   title: string;
   kicker: string;
   lede: string;
-  heroImage?: { src: string; alt: string };
+  heroImage?: { src: string; alt: string; fit?: 'natural' };
   chips?: [string, string][];
   sections: Section[];
 };
@@ -48,28 +52,37 @@ export const companyPages: CompanyPage[] = [
     id: 'dgrid-sdk', menu: 'software', path: 'software/dgrid-sdk', label: 'DGrid SDK',
     kicker: 'Software', title: 'DGrid SDK',
     lede: 'Comprehensive development toolkit for deploying AI models on Deepgrid semiconductor platforms. Optimize, deploy, and scale your edge AI applications with ease.',
-    heroImage: { src: img('deepgridsemi/sdk.webp'), alt: 'Illustration of a developer deploying a model to an edge device' },
+    // No hero image: the reference's stock phone illustration said nothing about the SDK. The pipeline beside the
+    // stack text is drawn from the reference's own features, in the order a model moves through them.
     sections: [
       { kind: 'split', kicker: 'The software stack', title: 'End-to-end integrated software stack', from: REF + '/software/dgrid-sdk',
+        flowLabel: 'From your model to the AIPU',
+        flow: [
+          { label: 'Your model', text: 'TensorFlow Lite · PyTorch · OpenCV · ONNX', icon: 'layers' },
+          { label: 'Model Optimization', text: 'Automated quantization and pruning', icon: 'sliders' },
+          { label: 'Runtime Libraries', text: 'High-performance inference', icon: 'boxes' },
+          { label: 'Deepgrid AIPUs', text: 'AI Processing Units at the edge', icon: 'cpu' },
+          { label: 'Performance Profiling', text: 'Analyze and optimize model performance', icon: 'gauge' },
+        ],
         paras: [
           'The DGrid SDK is purpose-built for Computer Vision at the Edge and enables customers to solve their AI business requirements by effortlessly deploying models to edge devices. Customers use the SDK to bring their applications into the Deepgrid AI platform and run it on our powerful AI Processing Units (AIPUs).',
           'Whether the application is developed using proprietary or standard industry models, the DGrid SDK offers end-to-end integration and is API-compatible with de-facto industry standards, unleashing the potential of our AIPUs, delivering high-performance AI that can be deployed quickly and easily.',
         ] },
       { kind: 'cards', kicker: 'Key features', title: 'Everything you need to develop for Deepgrid platforms', cols: 3, from: REF + '/software/dgrid-sdk',
         items: [
-          { title: 'Model Optimization', text: 'Optimize TensorFlow, PyTorch, and ONNX models for Deepgrid hardware with automated quantization and pruning.' },
-          { title: 'CLI Tools', text: 'Command-line interface' },
-          { title: 'Runtime Libraries', text: 'High-performance inference' },
-          { title: 'Documentation', text: 'Comprehensive guides, API references, and tutorials to get you started quickly.' },
-          { title: 'Performance Profiling', text: 'Built-in profiling tools to analyze and optimize model performance' },
-          { title: 'Pre-trained Models', text: 'Model zoo access' },
+          { title: 'Model Optimization', text: 'Optimize TensorFlow, PyTorch, and ONNX models for Deepgrid hardware with automated quantization and pruning.', icon: 'sliders' },
+          { title: 'CLI Tools', text: 'Command-line interface', icon: 'terminal' },
+          { title: 'Runtime Libraries', text: 'High-performance inference', icon: 'boxes' },
+          { title: 'Documentation', text: 'Comprehensive guides, API references, and tutorials to get you started quickly.', icon: 'book', href: 'resources/docs' },
+          { title: 'Performance Profiling', text: 'Built-in profiling tools to analyze and optimize model performance', icon: 'gauge' },
+          { title: 'Pre-trained Models', text: 'Model zoo access', icon: 'library' },
         ] },
       { kind: 'cards', kicker: 'Supported frameworks', title: 'Work with your favorite AI frameworks', cols: 4, from: REF + '/software/dgrid-sdk',
         items: [
-          { title: 'TensorFlow Lite', meta: 'Full support' },
-          { title: 'PyTorch', meta: 'Full support' },
-          { title: 'OpenCV', meta: 'Full support' },
-          { title: 'ONNX', meta: 'In progress' },
+          { title: 'TensorFlow Lite', meta: 'Full support', icon: 'check' },
+          { title: 'PyTorch', meta: 'Full support', icon: 'check' },
+          { title: 'OpenCV', meta: 'Full support', icon: 'check' },
+          { title: 'ONNX', meta: 'In progress', icon: 'progress' },
         ] },
       { kind: 'cta', title: 'Ready to Start Developing?', lede: 'Download the DGrid SDK and start building AI applications for edge devices.', from: REF + '/software/dgrid-sdk',
         actions: [ { label: 'Request SDK access', href: 'contact', primary: true }, { label: 'The silicon it targets', href: to('silicon') } ] },
@@ -106,6 +119,7 @@ export const companyPages: CompanyPage[] = [
           { title: 'Lane departure warning', meta: 'AIS-188 · CMVR 98(6)', href: uc('UC-05') },
           { title: 'Government and PSU perception kit', meta: 'PPP-MII Order 2017 · GFR 153(iii)', href: uc('UC-06') },
         ] },
+      { kind: 'videos', kicker: 'On the road', title: 'Road tests on Indian streets', lede: 'Live runs of the perception stack and the D-Mirror display.', groups: [{ title: 'Road tests', videos: [V.hitech, V.dgridAdas, V.mirrorThermal], from: 'deepgridsemi.com/resources/videos' }], from: 'deepgridsemi.com/resources/videos' },
       { kind: 'films', kicker: 'See it running', title: 'The ADAS stack in simulation', lede: 'Narrated simulations of the truck kit, the compute box and D-Drive.', ids: ['truck', 'computebox', 'ddrive'], from: 'showcase films' },
       { kind: 'cta', title: 'Build the Future of Autonomous Driving', lede: 'Partner with Deepgrid to accelerate your ADAS development', from: REF + '/use-cases/adas',
         actions: [ { label: 'Contact us', href: 'contact', primary: true }, { label: 'The AD2 truck kit', href: to('portfolio?product=ad2') }, { label: 'DGrid SDK', href: 'software/dgrid-sdk' } ] },
@@ -115,7 +129,9 @@ export const companyPages: CompanyPage[] = [
     id: 'humanoids', menu: 'usecases', path: 'use-cases/humanoids', label: 'Humanoid robotics',
     kicker: 'Use case', title: 'Humanoid robotics',
     lede: 'Enabling the next generation of humanoid robots with real-time AI perception, decision-making, and human-like interaction.',
-    heroImage: { src: img('deepgridsemi/roboarm.webp'), alt: 'Illustration of an articulated robot arm' },
+    // Apexgrid, DeepGrid's own humanoid, from its yoga video on the channel (i_5wXj0lHmM), in place of the
+    // reference's stock arm illustration.
+    heroImage: { src: img('deepgridsemi/apexgrid-poses.webp'), alt: 'Apexgrid, DeepGrid’s humanoid, in three poses: arms lowered, arms extended, arms raised', fit: 'natural' },
     chips: [['Motion Control AI', 'Advanced motor control algorithms for balance and locomotion'], ['Voice Activated Control', 'Natural language processing for intuitive voice commands'], ['Mobile Teleoperations', 'Remote control and monitoring from anywhere in real-time']],
     sections: [
       { kind: 'split', kicker: 'Humanoid AI Platform', title: 'Real-time perception + Adaptive intelligence + Human-like interaction', from: REF + '/use-cases/humanoids',
@@ -131,10 +147,10 @@ export const companyPages: CompanyPage[] = [
         ] },
       { kind: 'cards', kicker: 'Key capabilities', title: 'Advanced features enabling human-like intelligence', cols: 4, from: REF + '/use-cases/humanoids',
         items: [
-          { title: '3D Vision', text: 'Real-time depth perception at 30 FPS', image: img('deepgridsemi/3dvision.webp') },
-          { title: 'Natural Language', text: 'Voice interaction and command understanding', image: img('deepgridsemi/naturallanguage.webp') },
-          { title: 'Dexterous Control', text: '7 DOF with sub-millimeter precision', image: img('deepgridsemi/roboarm.webp') },
-          { title: 'Adaptive Learning', text: 'Trains through real-world video input', image: img('deepgridsemi/adaptivelearning.webp') },
+          { title: '3D Vision', text: 'Real-time depth perception at 30 FPS', icon: 'eye' },
+          { title: 'Natural Language', text: 'Voice interaction and command understanding', icon: 'mic' },
+          { title: 'Dexterous Control', text: '7 DOF with sub-millimeter precision', icon: 'hand' },
+          { title: 'Adaptive Learning', text: 'Trains through real-world video input', icon: 'film' },
         ] },
       { kind: 'cards', kicker: 'Future Roadmap', title: 'What\'s next for humanoid robotics', cols: 3, from: REF + '/use-cases/humanoids',
         items: [
@@ -142,7 +158,8 @@ export const companyPages: CompanyPage[] = [
           { title: 'Multi-Robot Collaboration', text: 'Coordinated task execution with swarm intelligence and distributed decision-making' },
           { title: 'General Purpose AI', text: 'Adaptive learning for diverse tasks without task-specific programming' },
         ] },
-      { kind: 'films', kicker: 'See it explained', title: 'From perception to action, in 80 seconds', lede: 'An animated illustration of the pipeline above, narrated. It is not footage of a robot.', ids: ['humanoid'], from: 'showcase explainer, built from this page' },
+      { kind: 'videos', kicker: 'On camera', title: 'Apexgrid, DeepGrid’s humanoid', lede: 'Joint calibration, balance and first movements, from the DeepGrid Semi channel.', groups: [{ title: 'Apexgrid', videos: [V.apexYoga], from: 'channel' }], shorts: [{ title: 'Shorts', videos: [V.apexCal, V.apexSalute, V.apexFast, V.apexLawn], from: 'channel' }], from: 'youtube.com DeepGrid Semi channel' },
+      { kind: 'films', kicker: 'See it explained', title: 'From perception to action, in 80 seconds', lede: 'An animated illustration of the pipeline above, narrated. The Apexgrid footage above is the robot itself.', ids: ['humanoid'], from: 'showcase explainer, built from this page' },
       { kind: 'cta', title: 'Build the Future of Humanoid Robotics', lede: 'Partner with Deepgrid to bring intelligent humanoid robots to life', from: REF + '/use-cases/humanoids',
         actions: [ { label: 'Collaborate with us', href: 'contact', primary: true }, { label: 'DGrid SDK', href: 'software/dgrid-sdk' } ] },
     ],
@@ -166,6 +183,7 @@ export const companyPages: CompanyPage[] = [
           { title: 'Fleet Intelligence', text: 'Real-time analytics and predictive insights' },
           { title: 'Asset Tracking', text: 'GPS and IoT integration for complete visibility' },
         ] },
+      { kind: 'videos', kicker: 'Field tests', title: 'D-Drive, the autonomous mobility platform', lede: "Follow-me navigation, bird's-eye-view perception and autonomous steering.", groups: [{ title: 'D-Drive', videos: [V.followMe, V.bev, V.steering], from: 'deepgridsemi.com/resources/videos' }], from: 'deepgridsemi.com/resources/videos' },
       { kind: 'films', kicker: 'See it running', title: 'A container terminal twin', lede: 'Positioning, routing and dispatch under quay cranes.', ids: ['yard'], from: 'showcase films' },
       { kind: 'cta', title: 'Transform Your Mobility Operations', lede: 'Partner with Deepgrid to build intelligent transportation systems', from: REF + '/use-cases/mobility',
         actions: [ { label: 'Contact us', href: 'contact', primary: true }, { label: 'Seaport AGV', href: to('portfolio?product=agv') }, { label: 'Autonomous TaaS', href: to('portfolio?product=taas') } ] },
@@ -318,6 +336,28 @@ export const companyPages: CompanyPage[] = [
           { src: img('deepgridsemi/award1.webp'), alt: 'The DeepGrid Semi team receiving the award on stage at the Hyderabad Entrepreneurship Summit', caption: 'The award at the Hyderabad Entrepreneurship Summit.', w: 1280, h: 960 },
           { src: img('deepgridsemi/award2.webp'), alt: 'TiE50 Hyderabad announcement: DeepGrid Semi selected among the Top 50 Startups in Telangana', caption: 'The TiE50 Hyderabad announcement.', w: 1280, h: 1280 },
         ] },
+    ],
+  },
+
+  // ------------------------------------------------------------------ Resources
+  {
+    id: 'docs', menu: 'resources', path: 'resources/docs', label: 'Documentation',
+    kicker: 'Technical documentation & resources', title: 'Resources',
+    lede: 'Access technical documentation, datasheets, whitepapers, and development resources',
+    sections: [
+      { kind: 'docs', groups: docGroups, from: 'deepgridsemi.com/resources/docs + the site\'s own PDFs' },
+      { kind: 'cta', title: 'Need Technical Support?', lede: 'Our technical team is here to help you get the most out of our products', from: 'deepgridsemi.com/resources/docs',
+        actions: [ { label: 'Contact Support', href: 'contact', primary: true }, { label: 'Videos', href: 'resources/videos' } ] },
+    ],
+  },
+  {
+    id: 'videos', menu: 'resources', path: 'resources/videos', label: 'Videos',
+    kicker: 'Demos, field tests & deep dives', title: 'Videos',
+    lede: 'Watch DeepGrid Semi\'s silicon, autonomous driving, and mobility platforms in action.',
+    sections: [
+      { kind: 'videos', title: 'By platform', groups: videoGroups, shorts: shortGroups, channel: true, from: 'deepgridsemi.com/resources/videos + youtube.com DeepGrid Semi channel' },
+      { kind: 'cta', title: 'Simulations and the narrated walkthrough', lede: 'The product lines in their simulators, the silicon films, and the 104-slide portfolio narrated end to end.', from: 'showcase films',
+        actions: [ { label: 'Simulations & walkthrough', href: 'demonstrations', primary: true }, { label: 'Documentation', href: 'resources/docs' } ] },
     ],
   },
 

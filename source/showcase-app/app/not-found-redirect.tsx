@@ -4,7 +4,7 @@ import { BASE } from './routes';
 
 // GitHub Pages is case- and slash-sensitive: /About, /about/, /about.html and /use-cases all 404.
 // Map them onto the real page before showing "not found".
-const SECTION_HOME: Record<string, string> = { 'use-cases': 'use-cases/adas', software: 'software/dgrid-sdk', about: 'about' };
+const SECTION_HOME: Record<string, string> = { 'use-cases': 'use-cases/adas', software: 'software/dgrid-sdk', about: 'about', resources: 'resources/docs' };
 
 export function NotFoundRedirect() {
   useEffect(() => {

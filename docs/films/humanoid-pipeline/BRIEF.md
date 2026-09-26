@@ -15,6 +15,8 @@ music: none
   interpretation (AI reasoning, context-aware decisions, natural-language voice commands),
   planning (motion planning, task sequencing), action (7 DOF, sub-millimetre precision, balance and
   locomotion, mobile teleoperation, adaptive learning from real-world video).
-- No robot footage exists. The film is an illustration of the pipeline and says so on screen and aloud.
+- The film is an illustration of the pipeline and says so on screen and aloud. Real footage of DeepGrid's
+  Apexgrid humanoid exists on the channel (youtube.com/@DeepgridSemi) and sits beside the film on the page.
+  (An earlier draft of this brief said no robot footage existed; that was wrong, found 2026-09-26.)
 - No product, price, customer or date is claimed.
 - On-screen text labels, it does not recite the narration.
