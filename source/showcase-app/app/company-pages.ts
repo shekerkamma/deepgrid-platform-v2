@@ -124,23 +124,23 @@ export const companyPages: CompanyPage[] = [
         ] },
       { kind: 'steps', kicker: 'How it works', title: 'How It Works', lede: 'From perception to action — a seamless AI pipeline that brings humanoid robots to life', from: REF + '/use-cases/humanoids',
         items: [
-          { title: 'Perception', text: 'Multi-sensor fusion for 3D understanding of the environment.' },
-          { title: 'Interpretation', text: 'Reasoning and context-aware decisions.' },
-          { title: 'Planning', text: 'Motion planning and task sequencing.' },
-          { title: 'Action', text: 'Precise motor control and adaptive behaviour.' },
+          { title: 'Perception', text: 'Multi-sensor fusion for 3D environment understanding' },
+          { title: 'Interpretation', text: 'AI reasoning and context-aware decision making' },
+          { title: 'Planning', text: 'Motion planning and task sequencing' },
+          { title: 'Action', text: 'Precise motor control and adaptive behavior' },
         ] },
       { kind: 'cards', kicker: 'Key capabilities', title: 'Advanced features enabling human-like intelligence', cols: 4, from: REF + '/use-cases/humanoids',
         items: [
-          { title: '3D vision', text: 'Real-time depth perception at 30 FPS.', image: img('deepgridsemi/3dvision.webp') },
-          { title: 'Natural language', text: 'Voice interaction and command understanding.', image: img('deepgridsemi/naturallanguage.webp') },
+          { title: '3D Vision', text: 'Real-time depth perception at 30 FPS', image: img('deepgridsemi/3dvision.webp') },
+          { title: 'Natural Language', text: 'Voice interaction and command understanding', image: img('deepgridsemi/naturallanguage.webp') },
           { title: 'Dexterous Control', text: '7 DOF with sub-millimeter precision', image: img('deepgridsemi/roboarm.webp') },
           { title: 'Adaptive Learning', text: 'Trains through real-world video input', image: img('deepgridsemi/adaptivelearning.webp') },
         ] },
       { kind: 'cards', kicker: 'Future Roadmap', title: 'What\'s next for humanoid robotics', cols: 3, from: REF + '/use-cases/humanoids',
         items: [
-          { title: 'Emotional intelligence', text: 'Facial recognition and emotion detection for empathetic interaction.' },
-          { title: 'Multi-robot collaboration', text: 'Coordinated task execution with distributed decision-making.' },
-          { title: 'General-purpose AI', text: 'Adaptive learning across tasks without task-specific programming.' },
+          { title: 'Emotional Intelligence', text: 'Advanced facial recognition and emotion detection for empathetic human interaction' },
+          { title: 'Multi-Robot Collaboration', text: 'Coordinated task execution with swarm intelligence and distributed decision-making' },
+          { title: 'General Purpose AI', text: 'Adaptive learning for diverse tasks without task-specific programming' },
         ] },
       { kind: 'cta', title: 'Build the Future of Humanoid Robotics', lede: 'Partner with Deepgrid to bring intelligent humanoid robots to life', from: REF + '/use-cases/humanoids',
         actions: [ { label: 'Collaborate with us', href: 'contact', primary: true }, { label: 'DGrid SDK', href: 'software/dgrid-sdk' } ] },
@@ -323,8 +323,8 @@ export const companyPages: CompanyPage[] = [
   // ------------------------------------------------------------------ Contact
   {
     id: 'contact', menu: 'contact', path: 'contact', label: 'Contact',
-    kicker: 'Contact', title: 'Talk to DeepGrid',
-    lede: 'Questions about the silicon, the products, the SDK, a demonstration or the investment case.',
+    kicker: 'We\'re here to help', title: 'Get in Touch',
+    lede: 'Let\'s discuss how Deepgrid Semi can power your AI innovation',
     sections: [{ kind: 'contact', from: REF + '/contact' }],
   },
 ];

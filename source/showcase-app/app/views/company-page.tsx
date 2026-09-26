@@ -44,6 +44,65 @@ function PersonCard({ p }: { p: Person }) {
   );
 }
 
+const INTERESTS = ['AI Accelerators', 'Software Solutions', 'Complete Systems', 'Partnership Opportunities', 'Other'];
+const OFFICE_MAP = 'https://www.openstreetmap.org/search?query=T-Hub%2C%20Knowledge%20City%2C%20Hyderabad';
+
+// deepgridsemi.com's contact page: a message form, contact information, a demo booking and the office.
+// This site is static, so the form composes an email to group@deepgrid.in in the visitor's own mail app.
+function ContactBlock() {
+  const [sent, setSent] = useState(false);
+  return (
+    <section className="cp-sec cp-contact-page">
+      <form
+        className="cp-card cp-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          const f = new FormData(e.currentTarget);
+          const get = (k: string) => String(f.get(k) || '').trim();
+          const subject = 'Enquiry' + (get('interest') ? ': ' + get('interest') : '') + (get('company') ? ' · ' + get('company') : '');
+          const body = [get('message'), '', '—', get('name'), get('email'), get('company')].filter((x, i) => x || i < 3).join('\n');
+          location.href = 'mailto:group@deepgrid.in?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+          setSent(true);
+        }}
+      >
+        <h2>Send Us a Message</h2>
+        <label><span className="cp-field">Name <b aria-hidden="true">*</b></span><input name="name" required autoComplete="name" /></label>
+        <label><span className="cp-field">Email <b aria-hidden="true">*</b></span><input name="email" type="email" required autoComplete="email" /></label>
+        <label>Company<input name="company" autoComplete="organization" /></label>
+        <label>Interest
+          <select name="interest" defaultValue="">
+            <option value="">Select an option</option>
+            {INTERESTS.map((x) => <option key={x}>{x}</option>)}
+          </select>
+        </label>
+        <label><span className="cp-field">Message <b aria-hidden="true">*</b></span><textarea name="message" required rows={5} /></label>
+        <button type="submit" className="primary">Send Message</button>
+        <p className="cp-detail" role="status">{sent ? 'Your email app should now be open with the message ready to send.' : 'Opens your email app with the message addressed to group@deepgrid.in.'}</p>
+      </form>
+      <div className="cp-contact-side">
+        <div className="cp-card">
+          <Mail size={20} aria-hidden="true" />
+          <h2>Contact Information</h2>
+          <p><span className="cp-meta">Email</span><br /><a className="text-link" href="mailto:group@deepgrid.in">group@deepgrid.in</a></p>
+          <p><span className="cp-meta">Headquarters</span><br />T-Hub, Floor-7<br />Hyderabad, India</p>
+        </div>
+        <div className="cp-card">
+          <ArrowUpRight size={20} aria-hidden="true" />
+          <h2>Schedule a Demo</h2>
+          <p>See our AI accelerators in action with a personalized demonstration</p>
+          <p><a className="primary" href="mailto:group@deepgrid.in?subject=Demo%20request">Book Demo</a></p>
+        </div>
+        <div className="cp-card">
+          <MapPin size={20} aria-hidden="true" />
+          <h2>Visit Our Office</h2>
+          <p>T-Hub, Floor-7, Knowledge City, Hyderabad, India</p>
+          <p><a className="text-link" href={OFFICE_MAP} target="_blank" rel="noopener noreferrer">Find us on the map <ArrowUpRight size={14} aria-hidden="true" /></a></p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Block({ s }: { s: Section }) {
   switch (s.kind) {
     case 'split':
@@ -128,73 +187,7 @@ function Block({ s }: { s: Section }) {
         </section>
       );
     case 'contact':
-      return (
-        <section className="cp-sec cp-contact">
-          <div className="cp-card">
-            <Mail size={20} aria-hidden="true" />
-            <h2>Email</h2>
-            <p><a className="text-link" href="mailto:group@deepgrid.in">group@deepgrid.in</a></p>
-            <p className="cp-detail">For products, the SDK, partnerships or a demonstration.</p>
-          </div>
-          <div className="cp-card">
-            <MapPin size={20} aria-hidden="true" />
-            <h2>Headquarters</h2>
-            <p>T-Hub, Floor 7<br />Hyderabad, India</p>
-          </div>
-          <div className="cp-card">
-            <ArrowUpRight size={20} aria-hidden="true" />
-            <h2>Schedule a demonstration</h2>
-            <p className="cp-detail">See DeepGrid’s perception systems running, in person or remotely.</p>
-            <p><a className="primary" href="mailto:group@deepgrid.in?subject=Demonstration%20request">Book a demo</a></p>
-          </div>
-        </section>
-      );
-    case 'roster':
-      return (
-        <section className="cp-sec">
-          <header className="cp-sec-head">
-            {s.kicker && <p className="kicker">{s.kicker}</p>}
-            <h2>{s.title}</h2>
-            {s.lede && <p className="cp-lede">{s.lede}</p>}
-          </header>
-          <div className="cp-roster">
-            {s.groups.map((g) => (
-              <div key={g.title} className="cp-card">
-                <h3>{g.title} <span className="cp-count">{g.people.length}</span></h3>
-                <ul>{g.people.map(([n, r]) => <li key={n}><strong>{n}</strong><span>{r}</span></li>)}</ul>
-              </div>
-            ))}
-          </div>
-        </section>
-      );
-    case 'films':
-      return (
-        <section className="cp-sec">
-          <header className="cp-sec-head">
-            {s.kicker && <p className="kicker">{s.kicker}</p>}
-            <h2>{s.title}</h2>
-            {s.lede && <p className="cp-lede">{s.lede}</p>}
-          </header>
-          <div className={'cp-films' + (s.ids.length > 1 ? ' cp-films-multi' : '')}>
-            {s.ids.map((id) => films.find((f) => f.id === id)).filter((f) => !!f).map((f) => (
-              <figure key={f.id} className="cp-film">
-                <Player film={f} />
-                <figcaption><strong>{f.title}</strong><span>{f.sub} · {f.length}</span></figcaption>
-              </figure>
-            ))}
-          </div>
-        </section>
-      );
-    case 'bullets':
-      return (
-        <section className="cp-sec">
-          <header className="cp-sec-head">
-            {s.kicker && <p className="kicker">{s.kicker}</p>}
-            <h2>{s.title}</h2>
-          </header>
-          <ul className="cp-bullets">{s.items.map((t) => <li key={t}>{t}</li>)}</ul>
-        </section>
-      );
+      return <ContactBlock />;
     case 'cta':
       return (
         <section className="cp-sec cp-cta">

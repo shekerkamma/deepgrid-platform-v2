@@ -1,9 +1,14 @@
 import { SitePage } from '../../site-page';
 import story from '../../data/tech-story.json';
+import { chapterMeta } from '../../page-meta';
 
 // One page per Silicon chapter (was one 16,000px page, #silicon?chapter=<id>).
 export function generateStaticParams() {
   return story.chapters.map((c) => ({ chapter: c.id }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ chapter: string }> }) {
+  return chapterMeta((await params).chapter);
 }
 
 export default async function Page({ params }: { params: Promise<{ chapter: string }> }) {

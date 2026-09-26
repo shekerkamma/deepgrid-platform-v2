@@ -85,6 +85,17 @@
 .cp-film figcaption strong { color: var(--ink); font-weight: 600; }
 .cp-film figcaption span { color: var(--ink-3); font-size: var(--sc-t-meta); }
 
+.cp-contact-page { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 1rem; align-items: start; }
+.cp-contact-side { display: grid; gap: 1rem; }
+.cp-contact-side svg { color: var(--copper); }
+.cp-form { gap: .9rem; }
+.cp-form label { display: grid; gap: .35rem; color: var(--ink-2); font-size: var(--sc-t-control); }
+.cp-form .cp-field b { color: var(--copper); font-weight: 400; }
+.cp-form input, .cp-form select, .cp-form textarea { font: inherit; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; padding: .65rem .75rem; min-height: 44px; }
+.cp-form textarea { resize: vertical; }
+.cp-form input:focus-visible, .cp-form select:focus-visible, .cp-form textarea:focus-visible { outline: 2px solid var(--copper); outline-offset: 1px; }
+.cp-form button { justify-self: start; min-height: 44px; }
+
 .cp-page :focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
 
 @media (max-width: 1000px) {
@@ -92,6 +103,13 @@
   .cp-cols-4, .cp-steps, .cp-people, .cp-cols-3, .cp-contact, .cp-roster, .cp-films-multi { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 620px) {
-  .cp-cols-2, .cp-cols-3, .cp-cols-4, .cp-steps, .cp-people, .cp-figures, .cp-contact, .cp-roster, .cp-films-multi { grid-template-columns: 1fr; }
+  .cp-cols-2, .cp-cols-3, .cp-cols-4, .cp-steps, .cp-people, .cp-figures, .cp-contact, .cp-roster, .cp-films-multi, .cp-contact-page { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .cp-card-link { transition: none; } }
+
+.nf-page { min-height: 70vh; display: grid; align-content: center; gap: 1rem; padding-block: 4rem; max-width: 46rem; }
+.nf-page h1 { font-family: var(--font-display, inherit); font-size: clamp(2rem, 5vw, 3.2rem); margin: 0; color: var(--ink); }
+.nf-page p { color: var(--ink-2); margin: 0; }
+.nf-links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .5rem; }
+.nf-links a { min-height: 44px; display: inline-flex; align-items: center; padding: .55rem .9rem; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); background: var(--surface); }
+.nf-links a:hover { border-color: var(--copper); }

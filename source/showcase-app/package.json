@@ -27,7 +27,8 @@
     "graph:tech": "node scripts/build-tech-story.mjs",
     "graph:relations": "node scripts/build-relations.mjs",
     "graph:storyboards": "node scripts/build-storyboards.mjs --films",
-    "check:gate": "node scripts/check-gate.mjs"
+    "check:gate": "node scripts/check-gate.mjs",
+    "verify:nav": "node scripts/verify-nav.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

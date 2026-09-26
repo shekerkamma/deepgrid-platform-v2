@@ -3,7 +3,7 @@
 // then dropdowns per subject) in the showcase's own look. Each dropdown is a disclosure: a button
 // with aria-expanded controlling a panel of links. It opens on click, on hover with a pointer, and
 // from the keyboard; Escape and a click outside close it.
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { products, groups } from './shared';
 import story from './data/tech-story.json';
@@ -73,9 +73,43 @@ const order: Entry[] = [
   { view: 'contact', label: 'Contact', href: BASE + 'contact' },
 ];
 
+const matchMediaSafe = () => typeof matchMedia !== 'undefined' && matchMedia('(hover: hover)').matches;
+// Single-column panels hang under their own button, nudged back inside the viewport when near an edge.
+
 export function MegaNav({ view, onNavigate, label = 'Primary navigation' }: { view: string; onNavigate?: () => void; label?: string }) {
   const [open, setOpen] = useState<string | null>(null);
   const root = useRef<HTMLElement>(null);
+  // Hover intent: a pointer crossing the gap between a button and its panel must not close it.
+  const closing = useRef<number | undefined>(undefined);
+  const hover = matchMediaSafe;
+  // Menu aim: while one panel is open, a pointer crossing a neighbouring button on its way to a link must
+  // not switch menus, so another button takes over only after the pointer rests on it.
+  const switching = useRef<number | undefined>(undefined);
+  const enter = (id: string) => {
+    if (!hover()) return;
+    window.clearTimeout(closing.current);
+    window.clearTimeout(switching.current);
+    setOpen((cur) => {
+      if (!cur || cur === id) return id;
+      switching.current = window.setTimeout(() => setOpen(id), 180);
+      return cur;
+    });
+  };
+  const leave = () => {
+    if (!hover()) return;
+    window.clearTimeout(switching.current);
+    window.clearTimeout(closing.current);
+    closing.current = window.setTimeout(() => setOpen(null), 280);
+  };
+  // Keep an open panel inside the viewport (a panel under a button near the edge would overflow).
+  useLayoutEffect(() => {
+    const el = open ? (root.current?.querySelector('#menu-' + open) as HTMLElement | null) : null;
+    if (!el || !el.closest('.is-narrow')) return;
+    el.style.translate = '';
+    const r = el.getBoundingClientRect(), pad = 12;
+    const dx = r.right > innerWidth - pad ? innerWidth - pad - r.right : r.left < pad ? pad - r.left : 0;
+    if (dx) el.style.translate = dx + 'px 0';
+  }, [open]);
   useEffect(() => {
     if (!open) return;
     const away = (e: MouseEvent) => { if (!root.current?.contains(e.target as Node)) setOpen(null); };
@@ -107,7 +141,7 @@ export function MegaNav({ view, onNavigate, label = 'Primary navigation' }: { vi
         const isOpen = open === m.id;
         const active = m.views.includes(view);
         return (
-          <div key={m.id} className="mega-item" onMouseEnter={(e) => { if (matchMedia('(hover: hover)').matches) setOpen(m.id); void e; }} onMouseLeave={() => { if (matchMedia('(hover: hover)').matches) setOpen(null); }}>
+          <div key={m.id} className={'mega-item' + (m.columns.length === 1 ? ' is-narrow' : '')} onMouseEnter={() => enter(m.id)} onMouseLeave={leave}>
             <button type="button" className={'mega-trigger' + (active ? ' active' : '')} aria-expanded={isOpen} aria-controls={'menu-' + m.id} onClick={() => setOpen(isOpen ? null : m.id)}>
               {m.label}
               <ChevronDown size={14} aria-hidden="true" />

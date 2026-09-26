@@ -92,8 +92,8 @@ export function SitePage({ view: pageView, product: productId, page: pageId, cha
   }, []);
   useEffect(() => {
     const ch = chapterId && story.chapters.find((c) => c.id === chapterId);
-    document.title = companyPage ? companyPage.title + ' · DeepGrid Semi' : ch ? ch.kicker + ' · Silicon · DeepGrid Semi' : titles[view] || titles.overview;
-  }, [view, companyPage, chapterId]);
+    document.title = companyPage ? companyPage.title + ' · DeepGrid Semi' : ch ? ch.kicker + ' · Silicon · DeepGrid Semi' : view === 'portfolio' && product ? product.name + ' · Products · DeepGrid Semi' : titles[view] || titles.overview;
+  }, [view, companyPage, chapterId, product]);
   useScrollVars();
   useReveal(
     view +

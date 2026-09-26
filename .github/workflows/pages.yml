@@ -36,6 +36,8 @@ jobs:
           python3 scripts/serve-pages.py "$PWD/dist/pages" deepgrid-platform-v2 8771 >/dev/null 2>&1 &
           until curl -sf http://127.0.0.1:8771/deepgrid-platform-v2/ >/dev/null; do sleep 1; done
       - run: npm run verify -- http://127.0.0.1:8771/deepgrid-platform-v2/ verify-shots
+      # Menus driven by pointer, keyboard and phone sheet; URLs as people type them (/About, /about/).
+      - run: npm run verify:nav -- http://127.0.0.1:8771/deepgrid-platform-v2/
       - if: failure()
         uses: actions/upload-artifact@v4
         with:
@@ -85,6 +87,7 @@ jobs:
           done
           echo "Pages did not serve $GITHUB_SHA within 10 minutes"; exit 1
       - run: npm run verify -- "$SITE" verify-shots
+      - run: npm run verify:nav -- "$SITE"
       - if: failure()
         uses: actions/upload-artifact@v4
         with:

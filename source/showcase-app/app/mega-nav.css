@@ -24,6 +24,10 @@
   z-index: 40;
 }
 .mega-panel[hidden] { display: none; }
+/* A one-column panel sits under its own button, so the pointer reaches it without crossing the bar. */
+.mega-item.is-narrow { position: relative; }
+.mega-item.is-narrow > .mega-panel { left: 0; right: auto; width: min(24rem, calc(100vw - 24px)); max-width: none; padding: 1rem 1.1rem 1.2rem; border-top: 1px solid var(--line); border-radius: 0 0 10px 10px; }
+.mega-item.is-narrow .mega-col ul { grid-template-columns: minmax(0, 1fr); }
 .mega-cols-1 { grid-template-columns: minmax(0, 1fr); max-width: 44rem; }
 .mega-cols-5 { grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, .9fr); }
 .mega-col-title { margin: 0 0 .6rem; font-size: var(--sc-t-meta); letter-spacing: var(--sc-track-meta); text-transform: uppercase; color: var(--copper); }
@@ -39,7 +43,8 @@
 .navigation-sheet .mega-nav::before { display: none; }
 .navigation-sheet .mega-item { display: grid; }
 .navigation-sheet .mega-nav > a, .navigation-sheet .mega-trigger { justify-content: space-between; padding: .9rem 0; border-bottom: 1px solid var(--line-soft); box-shadow: none; }
-.navigation-sheet .mega-panel { position: static; box-shadow: none; border: 0; padding: .5rem 0 1rem; background: none; grid-template-columns: 1fr; }
+.navigation-sheet .mega-item.is-narrow { position: static; }
+.navigation-sheet .mega-item.is-narrow > .mega-panel, .navigation-sheet .mega-panel { position: static; width: auto; box-shadow: none; border: 0; padding: .5rem 0 1rem; background: none; grid-template-columns: 1fr; }
 .navigation-sheet .mega-cols-1 .mega-col ul { grid-template-columns: 1fr; }
 .navigation-sheet .mega-col a small { display: none; }
 
@@ -52,3 +57,6 @@
 .navigation-sheet nav.mega-nav { align-self: stretch; margin-top: 25px; }
 .navigation-sheet .mega-nav > a { font-size: var(--sc-t-control); font-weight: 500; }
 .navigation-sheet nav.mega-nav { grid-template-columns: minmax(0, 1fr); justify-content: stretch; }
+/* The sheet is fixed at screen height; with Products expanded its list runs ~1,500px, so it must scroll
+   or every link below the fold is unreachable on a phone. */
+.navigation-sheet[data-slot='sheet-content'] { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
