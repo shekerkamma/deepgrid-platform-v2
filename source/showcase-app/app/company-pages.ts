@@ -86,7 +86,7 @@ export const companyPages: CompanyPage[] = [
       { kind: 'split', kicker: 'ADAS AI Platform', title: 'Real-time perception + Intelligent decision-making + Safety-critical execution', from: REF + '/use-cases/adas',
         paras: [
           'The automotive industry is rapidly evolving towards autonomous driving, requiring sophisticated AI systems that can perceive, understand, and react to complex driving scenarios in real-time. Deepgrid\'s ADAS AI Platform delivers the computational power and safety-critical reliability needed for Level 2+ to Level 4 autonomous driving systems, combining advanced sensor fusion, AI perception, and intelligent path planning.',
-          'On the DG-A100 FPGA prototype, the measured pipeline runs at 35.96 ms per frame (28.12 FPS).',
+          'Measured today on the DG-A100 FPGA prototype, the full perception pipeline processes a camera frame in 35.96 ms (28.12 FPS). That is the time to process a whole frame end to end, a different measure from the safety-decision latency above.',
           'Demonstrator systems run at TiHAN (IIT Hyderabad) and NATRAX Indore for ADAS truck and robotic use cases.',
         ],
         image: img('posters/truck.webp'), imageAlt: 'Simulation still of the AD2 truck kit’s sensor coverage' },
@@ -197,7 +197,7 @@ export const companyPages: CompanyPage[] = [
     kicker: 'About Us', title: 'A semiconductor company for edge AI, in Hyderabad',
     lede: 'Our mission is to provide businesses with cutting-edge AI acceleration technology to thrive in today\'s intelligent systems market.',
     sections: [
-      { kind: 'stats', from: REF + '/about/story', items: [['2020', 'Founded'], ['100+', 'Team Members'], ['4', 'Product Lines']] },
+      { kind: 'stats', from: REF + '/about/story', items: [['2020', 'Founded'], ['28', 'Team Members'], ['4', 'Product Lines']] },
       { kind: 'split', kicker: 'Who We Are', title: 'Chip design, AI and autonomous systems under one roof', from: REF + '/about/story',
         paras: [
           'Deepgrid Semi is a pioneering semiconductor company specializing in AI acceleration solutions for edge computing. Founded by a team of industry veterans with decades of combined experience in chip design, AI, and autonomous systems, we are at the forefront of the AI revolution.',
@@ -288,13 +288,13 @@ export const companyPages: CompanyPage[] = [
     sections: [
       { kind: 'split', kicker: 'Featured award · 2024', title: 'Top 50 Startups in Telangana', lede: 'Telangana Innovation Ecosystem & T-Hub', from: REF + '/about/achievements',
         paras: ['DeepGrid Semi Pvt. Ltd. is redefining the semiconductor landscape with its indigenous DGrid SoC, a low-power, high-parallelism AI chipset designed for ADAS, robotics, and edge intelligence. With a mission to bring Full-Stack Edge Intelligence — from Silicon, Sensors, Systems to Sentience, DeepGrid Semi stands at the forefront of India\'s next-generation compute innovation.'], },
-      { kind: 'stats', from: REF + '/about/achievements', items: [['1000+', 'ADAS chipsets'], ['5+', 'Collaborations'], ['3+', 'Patents'], ['20+', 'Skilled engineers']] },
+      { kind: 'stats', from: REF + '/about/achievements', items: [['1000+', 'ADAS chipsets'], ['5+', 'Collaborations'], ['3+', 'Patents'], ['28', 'Skilled engineers']] },
       { kind: 'bullets', kicker: 'Achievements', title: 'Where the numbers come from', from: REF + '/about/achievements',
         items: [
           '1,000+ ADAS chipsets currently in the prototyping stage, showcasing our commitment to innovation and safety.',
           '5+ Strategic collaborations with top Original Equipment Manufacturers (OEMs), including Yamaha Motors, Kia Motors, Renault-Nissan, and Maruti Suzuki.',
           '3+ Patents filed for AI-based safety technologies that enhance automotive performance and accident prevention.',
-          '20+ Skilled engineers and researchers committed to advancing our ADAS solutions.',
+          '28 skilled engineers and researchers committed to advancing our ADAS solutions.',
         ] },
       { kind: 'cards', kicker: 'All Awards & Recognition', title: 'Nine awards, 2022 to 2024', cols: 3, from: REF + '/about/achievements',
         items: [

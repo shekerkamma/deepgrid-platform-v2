@@ -128,3 +128,9 @@ The reference is not internally consistent, and the site now shows it as stated:
 (About) vs 20+ engineers (Achievements) vs 28 named engineers (Team). Sub-10 ms decision latency (ADAS
 chip) sits beside the showcase's measured 35.96 ms per frame on the FPGA prototype — different
 quantities, but a reader may take them as one. Worth a decision before investors read both.
+
+**Resolved 2026-09-26 (user):** headcount is **28** everywhere the site speaks for itself (About stats,
+Achievements stat and bullet, showcase themes). The 104-slide deck's transcripts still say
+thirty-four because the slide image does; the deck is a fixed artifact. The ADAS page keeps the
+reference's "Sub-10ms latency for critical safety decisions" and now labels 35.96 ms as whole-frame
+processing time on the FPGA prototype, a different measure.
