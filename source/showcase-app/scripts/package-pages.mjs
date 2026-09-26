@@ -21,7 +21,9 @@ for(const [,ref] of html.matchAll(/(?:src|href)="([^"?#]+)"/g)){
  if(/^(https?:|data:|mailto:)/.test(ref))continue;
  const relative=ref.startsWith(base)?ref.slice(base.length):ref.replace(/^\.\//,'');
  if(ref.startsWith('/')&&!ref.startsWith(base))throw Error('Unprefixed asset: '+ref);
- if(!fs.existsSync(path.join(output,relative)))throw Error('Missing asset: '+ref);
+ // A route link (/base/silicon) resolves to silicon.html on Pages; a file must exist as named.
+ const exists=f=>fs.existsSync(path.join(output,f))&&fs.statSync(path.join(output,f)).isFile();
+ if(!(exists(relative)||exists(relative+'.html')||exists(path.join(relative,'index.html'))||relative===''))throw Error('Missing asset or page: '+ref);
  checked++;
 }
 for(let i=1;i<=104;i++)if(!fs.existsSync(path.join(output,`slides/slide_${String(i).padStart(2,'0')}.png`)))throw Error('Missing slide '+i);

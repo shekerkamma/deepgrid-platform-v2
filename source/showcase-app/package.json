@@ -12,7 +12,7 @@
     "lint": "oxlint",
     "format": "oxfmt",
     "typecheck": "tsc --noEmit",
-    "build:pages": "node scripts/check-gate.mjs && node scripts/check-visuals.mjs && node scripts/check-theme-sources.mjs && node scripts/check-tech-story.mjs && node scripts/check-relations.mjs && node scripts/check-storyboards.mjs && node scripts/check-semantic.mjs && node scripts/copy-runtime.mjs && node scripts/build.mjs && node scripts/package-pages.mjs",
+    "build:pages": "node scripts/check-gate.mjs && node scripts/check-visuals.mjs && node scripts/check-theme-sources.mjs && node scripts/check-tech-story.mjs && node scripts/check-relations.mjs && node scripts/check-storyboards.mjs && node scripts/check-semantic.mjs && node scripts/copy-runtime.mjs && NEXT_PUBLIC_PAGES_BASE=${PAGES_BASE:-/deepgrid-platform-v2/} node scripts/build.mjs && node scripts/package-pages.mjs",
     "check:semantic": "node scripts/check-semantic.mjs",
     "graph:extract": "bash scripts/graphify-extract.sh",
     "graph:index": "node scripts/build-showcase-catalog.mjs && uv run --no-project --with pymupdf python scripts/build-unified-graphrag.py && node scripts/publish-graph.mjs",

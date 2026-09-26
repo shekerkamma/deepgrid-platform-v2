@@ -9,6 +9,7 @@ import './use-cases.css';
 import './ask.css';
 import './site.css';
 import './showcase-refinement.css';
+import { BASE } from './routes';
 
 const site = 'https://shekerkamma.github.io/deepgrid-platform-v2/';
 export const metadata: Metadata = {
@@ -40,6 +41,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="dark">
+      {/* Every page is now its own route, but assets and data are addressed relatively
+          ('./slides/…', './knowledge/…'); the base makes them resolve from the site root at any depth. */}
+      <head>
+        <base href={BASE} />
+      </head>
       <body>{children}</body>
     </html>
   );

@@ -29,6 +29,23 @@ const pw = await import(process.env.PLAYWRIGHT || 'playwright');
 const { chromium } = pw.chromium ? pw : pw.default;
 const BASE =
   process.argv[2] || 'http://127.0.0.1:8771/deepgrid-platform-v2/';
+// v2: every view has its own URL. Mirrors app/routes.ts: '#portfolio?product=ad2' -> products/ad2.
+const VIEW_PATH = {overview: '', portfolio: 'products', silicon: 'silicon', film: 'demonstrations', investment: 'investors', slides: 'investors/portfolio-deck', briefing: 'investors/ask'};
+function urlFor(hash) {
+  const [v, q = ''] = hash.replace(/^#/, '').split('?');
+  if (!(v in VIEW_PATH)) return BASE + '#' + hash.replace(/^#/, '');
+  const params = new URLSearchParams(q); let path = VIEW_PATH[v];
+  if (v === 'portfolio' && params.get('product')) { path += '/' + params.get('product'); params.delete('product'); }
+  return BASE + path + (params.size ? '?' + params : '');
+}
+/** A URL read back in the old hash vocabulary ('…/demonstrations?v=master&t=325' -> '#film?v=master&t=325'). */
+function hereFrom(href) {
+  const u = new URL(href); let rest = u.pathname.slice(new URL(BASE).pathname.length).replace(/\.html$/, ''); let product = '';
+  if (rest.startsWith('products/')) { product = rest.slice(9); rest = 'products'; }
+  const v = (Object.entries(VIEW_PATH).find(([, pth]) => pth === rest) || ['overview'])[0];
+  const q = new URLSearchParams(u.search); if (product) q.set('product', product);
+  return '#' + v + (q.size ? '?' + q : '');
+}
 const OUT = process.argv[3] || 'verify-shots';
 mkdirSync(OUT, { recursive: true });
 const b = await chromium.launch({
@@ -91,7 +108,7 @@ for (const { tag, viewport } of [
   const p = await b.newPage({ viewport });
   watch(p, tag);
   for (const r of routes) {
-    await p.goto(BASE + '#' + r, { waitUntil: 'networkidle' });
+    await p.goto(urlFor('' + r), { waitUntil: 'networkidle' });
     await p.waitForTimeout(600);
     await frames(p);
     await p.evaluate(async () => {
@@ -161,7 +178,7 @@ for (const { tag, viewport } of [
 {
   const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
   watch(p, 'clocks');
-  await p.goto(BASE + '#overview', { waitUntil: 'networkidle' });
+  await p.goto(urlFor('overview'), { waitUntil: 'networkidle' });
   await p.waitForTimeout(600);
   const g = await p.evaluate(() => {
     const s = document.querySelector('.ov-clocks'),
@@ -212,7 +229,7 @@ for (const { tag, viewport } of [
     },
   ]) {
     const q = await b.newPage(opts);
-    await q.goto(BASE + '#overview', { waitUntil: 'networkidle' });
+    await q.goto(urlFor('overview'), { waitUntil: 'networkidle' });
     await q.waitForTimeout(600);
     const s = await q.evaluate(() => ({
       pinned: document
@@ -233,7 +250,7 @@ for (const { tag, viewport } of [
 {
   const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
   watch(p, 'products');
-  await p.goto(BASE + '#portfolio?layout=table', { waitUntil: 'networkidle' });
+  await p.goto(urlFor('portfolio?layout=table'), { waitUntil: 'networkidle' });
   const first = () =>
     p.evaluate(
       () => document.querySelector('.compare-table tbody th').innerText,
@@ -268,7 +285,7 @@ for (const { tag, viewport } of [
 {
   const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
   watch(p, 'product');
-  await p.goto(BASE + '#portfolio', { waitUntil: 'networkidle' });
+  await p.goto(urlFor('portfolio'), { waitUntil: 'networkidle' });
   const cards = await p.evaluate(
     () => document.querySelectorAll('.catalog-list .product-card').length,
   );
@@ -291,7 +308,7 @@ for (const { tag, viewport } of [
     'h100',
     'radar',
   ]) {
-    await p.goto(BASE + '#portfolio?product=' + id, {
+    await p.goto(urlFor('portfolio?product=' + id), {
       waitUntil: 'networkidle',
     });
     const m = await p.evaluate(() => ({
@@ -341,16 +358,17 @@ for (const { tag, viewport } of [
       );
   }
   // the walkthrough link lands on the master film at the product's moment
-  await p.goto(BASE + '#portfolio?product=ad2', { waitUntil: 'networkidle' });
+  await p.goto(urlFor('portfolio?product=ad2'), { waitUntil: 'networkidle' });
   await p
     .click('.pp-more a[href^="#film?v=master"]', { timeout: 5000 })
     .catch(() => fail('walkthrough link missing on the AD2 page'));
   await p.waitForTimeout(400);
   const w = await p.evaluate(() => ({
-    hash: location.hash,
+    hash: location.href,
     src:
       document.querySelector('#film-master source')?.getAttribute('src') || '',
   }));
+  w.hash = hereFrom(w.hash);
   if (
     !w.hash.startsWith('#film?v=master&t=') ||
     !w.src.includes('#t=' + w.hash.split('t=')[1])
@@ -358,7 +376,7 @@ for (const { tag, viewport } of [
     fail(`walkthrough link: ${w.hash} -> ${w.src}`);
   // Ask opens on the question a product page sends
   await p.goto(
-    BASE + '#briefing?q=' + encodeURIComponent('Tell me about the Seaport AGV'),
+    urlFor('briefing?q=' + encodeURIComponent('Tell me about the Seaport AGV')),
     { waitUntil: 'networkidle' },
   );
   await p
@@ -387,7 +405,7 @@ for (const { tag, viewport } of [
     ['What is the revenue ramp to FY2032?', 'images/figure-12.webp'],
     ['Why does kurtosis stop rising as a bearing degrades?', null],
   ]) {
-    await p.goto(BASE + '#briefing?q=' + encodeURIComponent(q), {
+    await p.goto(urlFor('briefing?q=' + encodeURIComponent(q)), {
       waitUntil: 'networkidle',
     });
     // Ask answers by keywords first and re-answers once the in-browser model is loaded; judge the settled answer
@@ -431,7 +449,7 @@ for (const { tag, viewport } of [
 {
   const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
   watch(p, 'technology');
-  await p.goto(BASE + '#silicon', { waitUntil: 'networkidle' });
+  await p.goto(urlFor('silicon'), { waitUntil: 'networkidle' });
   const BARE = /^(read|open|open slide|pdf|download|more|link|source)$/i;
   const chapters = await p.evaluate(async () =>
     Promise.all(
@@ -485,11 +503,11 @@ for (const { tag, viewport } of [
   }
   // a deck reference opens that slide
   await p.click('#tech-cube .tech-refs a[href^="#slides?slide="]');
-  await p.waitForTimeout(500);
-  if (!(await p.evaluate(() => location.hash.startsWith('#slides?slide='))))
+  await p.waitForURL(/\/investors\/portfolio-deck\?/, { timeout: 15000 }).catch(() => {});
+  if (!hereFrom(await p.evaluate(() => location.href)).startsWith('#slides?slide='))
     fail('technology: a deck reference did not open the deck');
   // a product page links to its domain on the die: the Radar Pod opens Six domains with R100 selected, in view
-  await p.goto(BASE + '#portfolio?product=radar', { waitUntil: 'networkidle' });
+  await p.goto(urlFor('portfolio?product=radar'), { waitUntil: 'networkidle' });
   await p
     .click('.pp-more a[href="#silicon?chapter=domains&domain=R100"]', {
       timeout: 5000,
@@ -497,7 +515,8 @@ for (const { tag, viewport } of [
     .catch(() =>
       fail('radar page: no link to its domain on the Technology page'),
     );
-  await p.waitForTimeout(800);
+  await p.waitForURL(/\/silicon\?/, { timeout: 15000 }).catch(() => {});
+  await p.waitForFunction(() => { const t = document.getElementById('tech-domains')?.getBoundingClientRect().top; return t !== undefined && t > -5 && t < 200; }, null, { timeout: 8000 }).catch(() => {});
   const landed = await p.evaluate(() => ({
     tab:
       document.querySelector('#tech-domains [role=tab][aria-selected=true]')
@@ -540,7 +559,7 @@ for (const { tag, viewport } of [
     ],
     ['silicon', '#tech-sensors .related', '#portfolio?product=ad2'],
   ]) {
-    await p.goto(BASE + '#' + hash, { waitUntil: 'networkidle' });
+    await p.goto(urlFor('' + hash), { waitUntil: 'networkidle' });
     await p.waitForTimeout(400);
     const m = await p.evaluate(
       ([scope, expect]) => {
@@ -563,9 +582,11 @@ for (const { tag, viewport } of [
       );
   }
   // follow one: the cube film's related chapter opens the Silicon platform at that chapter
-  await p.goto(BASE + '#film?v=cube', { waitUntil: 'networkidle' });
+  await p.goto(urlFor('film?v=cube'), { waitUntil: 'networkidle' });
   await p.click('#film-cube .related a[href="#silicon?chapter=cube"]');
-  await p.waitForTimeout(900);
+  // v2: the link loads the Silicon page, so wait for it and for the chapter to land, not a fixed delay.
+  await p.waitForURL(/\/silicon\?chapter=cube/, { timeout: 15000 }).catch(() => {});
+  await p.waitForFunction(() => { const t = document.getElementById('tech-cube')?.getBoundingClientRect().top; return t !== undefined && t > -5 && t < 200; }, null, { timeout: 8000 }).catch(() => {});
   const top = await p.evaluate(() =>
     Math.round(
       document.getElementById('tech-cube')?.getBoundingClientRect().top ?? -1,
@@ -583,14 +604,15 @@ for (const { tag, viewport } of [
 {
   const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
   watch(p, 'deck');
-  await p.goto(BASE + '#slides?slide=5', { waitUntil: 'networkidle' });
+  await p.goto(urlFor('slides?slide=5'), { waitUntil: 'networkidle' });
   await p.keyboard.press('ArrowRight');
   await p.waitForTimeout(200);
   const s = await p.evaluate(() => ({
-    hash: location.hash,
+    hash: location.href,
     strip: document.querySelector('.deck-strip [aria-current="true"] span')
       ?.textContent,
   }));
+  s.hash = hereFrom(s.hash);
   if (!s.hash.includes('slide=6') || s.strip !== '6')
     fail(`deck: ArrowRight from 5 gave ${s.hash}, strip ${s.strip}`);
   await p.close();
@@ -601,7 +623,7 @@ for (const { tag, viewport } of [
   const p = await b.newPage();
   watch(p, 'assets');
   // one film per group is on the stage at a time: choose each in turn and check the player it puts there
-  await p.goto(BASE + '#film', { waitUntil: 'networkidle' });
+  await p.goto(urlFor('film'), { waitUntil: 'networkidle' });
   const tabs = await p.evaluate(() =>
     [...document.querySelectorAll('.film-chooser [role=tab]')].map((t) => t.id),
   );
@@ -675,7 +697,7 @@ for (const { tag, viewport } of [
     fail(
       `walkthrough storyboard: ${walk.chapters} chapters, ${walk.lines} product-line moments`,
     );
-  await p.goto(BASE + '#film?v=forklift', { waitUntil: 'networkidle' });
+  await p.goto(urlFor('film?v=forklift'), { waitUntil: 'networkidle' });
   await p.waitForTimeout(500);
   await p.click('#film-forklift .storyboard > li:nth-child(3) > button');
   await p.waitForTimeout(600);
@@ -687,7 +709,7 @@ for (const { tag, viewport } of [
     `storyboards: ${boards.length} films in beats, walkthrough in ${walk.chapters} chapters with ${walk.lines} product-line moments`,
   );
   // Silicon platform figures carry what they show and why it matters
-  await p.goto(BASE + '#silicon', { waitUntil: 'networkidle' });
+  await p.goto(urlFor('silicon'), { waitUntil: 'networkidle' });
   const figs = await p.evaluate(() =>
     [...document.querySelectorAll('.tech-figure figcaption')].map(
       (c) => c.querySelectorAll('span').length,
@@ -697,7 +719,7 @@ for (const { tag, viewport } of [
     fail(
       `silicon figures: ${JSON.stringify(figs)} (want 4, each with what it shows and why it matters)`,
     );
-  await p.goto(BASE + '#investment', { waitUntil: 'networkidle' });
+  await p.goto(urlFor('investment'), { waitUntil: 'networkidle' });
   const docs = await p.evaluate(async () =>
     Promise.all(
       [...document.querySelectorAll('.inv-docs a')].map(async (a) => {
