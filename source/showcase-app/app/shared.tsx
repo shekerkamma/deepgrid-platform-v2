@@ -35,56 +35,59 @@ export const groups = [
   'Sensors & Robotics',
 ];
 
-// The six compute domains on SoC2. `carries` names the business each domain serves, from the
-// memorandum's die card (figure 5 of the June 2026 IM). Names are the memorandum's (IM v2, page 15); the Technology
-// story's domain pills and the product pages use the same names, and scripts/check-tech-story.mjs holds them to it.
+// The six compute domains on SoC2 (the six chiplets of the 28 nm combo die). Names and roles follow
+// deepgridsemi.com where it and the memorandum differ (content/reconciliation.md); the memorandum's
+// extra detail stays.
+// `carries` names the businesses each domain serves, from the memorandum's die card (figure 5 of
+// the June 2026 IM). The Technology story's domain pills and the product pages use these names, and
+// scripts/check-tech-story.mjs holds them to it.
 export const domains = [
   {
     code: 'A100',
-    name: 'AI / ADAS processor',
+    name: 'ADAS SoC',
     type: 'NPU',
     Icon: Cpu,
-    desc: 'Parallel perception for camera feeds and edge-AI workloads. The core compute in every AD kit.',
+    desc: 'Sensor-fusion ADAS processor, targeting six cameras, two radars and one LiDAR; 35.96 ms per frame measured on the FPGA prototype, with a SkyWater 130 nm proof-of-concept tape-out on the path to first silicon in 2026. The core compute in every AD kit.',
     carries: ['ad2', 'ad0', 'ad1', 'a100-1', 'a100-2', 'a100-4'],
   },
   {
     code: 'R100',
-    name: 'Radar DSP',
+    name: 'Radar SoC',
     type: 'DSP',
     Icon: Radio,
-    desc: 'Dedicated hardware DSP for radar point clouds. Replaces the third-party radar processor.',
+    desc: '4D imaging radar processing at 76 to 81 GHz (FMCW, MIMO) for range, velocity, azimuth and elevation. Replaces the third-party radar processor.',
     carries: ['radar'],
   },
   {
     code: 'T100',
-    name: 'Edge AI, thermal and LiDAR',
+    name: 'Transformer NPU',
     type: 'AI',
     Icon: ScanLine,
-    desc: 'India-tuned perception for thermal and LiDAR, and a licensable AI software stack.',
+    desc: 'Transformer-optimised NPU for vision transformers and on-device language models in mixed precision, with India-tuned thermal and LiDAR perception and a licensable AI software stack.',
     carries: ['t100', 'thermal'],
   },
   {
     code: 'D100',
-    name: 'Defence secure compute',
+    name: 'Drone SoC',
     type: 'SEC',
     Icon: ShieldCheck,
-    desc: 'Lockstep RISC-V, AES-256 and ECC SRAM for defence, humanoid and drone systems.',
+    desc: 'Autonomous-flight compute for navigation, obstacle avoidance and SLAM without GPS, on lockstep RISC-V with AES-256 and ECC SRAM for defence, humanoid and drone systems.',
     carries: ['dhumr', 'd100'],
   },
   {
     code: 'S100',
-    name: 'SDV and vehicle gateway',
+    name: 'SDV controller',
     type: 'GW',
     Icon: Activity,
-    desc: 'Vehicle gateway, CAN FD, telematics and over-the-air updates for fleets.',
+    desc: 'Software-defined-vehicle controller: vehicle gateway, CAN FD, telematics and over-the-air updates over automotive Ethernet.',
     carries: ['taas', 'agv'],
   },
   {
     code: 'H100',
-    name: 'Health AI processor',
+    name: 'Healthcare SoC',
     type: 'HLT',
     Icon: Thermometer,
-    desc: 'Driver fatigue and health monitoring at under a milliwatt.',
+    desc: 'Health and fatigue monitoring at under a milliwatt, for wearables and drivers.',
     carries: ['h100'],
   },
 ] as const;

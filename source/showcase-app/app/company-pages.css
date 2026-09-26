@@ -70,13 +70,21 @@
 .cp-actions { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; align-items: center; margin-top: 1rem; }
 .cp-actions a { display: inline-flex; align-items: center; gap: .4rem; }
 
+.cp-roster { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; align-items: start; }
+.cp-roster ul { list-style: none; margin: .25rem 0 0; padding: 0; display: grid; gap: .55rem; }
+.cp-roster li { display: grid; gap: .05rem; }
+.cp-roster li strong { font-weight: 500; color: var(--ink); font-size: var(--sc-t-control); }
+.cp-roster li span { color: var(--ink-3); font-size: var(--sc-t-meta); }
+.cp-count { color: var(--copper); font-size: var(--sc-t-meta); font-weight: 400; margin-left: .35rem; }
+.cp-bullets { margin: 0; padding-left: 1.2rem; display: grid; gap: .6rem; max-width: 62ch; color: var(--ink-2); }
+
 .cp-page :focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
 
 @media (max-width: 1000px) {
   .cp-hero, .cp-split { grid-template-columns: 1fr; }
-  .cp-cols-4, .cp-steps, .cp-people, .cp-cols-3, .cp-contact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cp-cols-4, .cp-steps, .cp-people, .cp-cols-3, .cp-contact, .cp-roster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 620px) {
-  .cp-cols-2, .cp-cols-3, .cp-cols-4, .cp-steps, .cp-people, .cp-figures, .cp-contact { grid-template-columns: 1fr; }
+  .cp-cols-2, .cp-cols-3, .cp-cols-4, .cp-steps, .cp-people, .cp-figures, .cp-contact, .cp-roster { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .cp-card-link { transition: none; } }

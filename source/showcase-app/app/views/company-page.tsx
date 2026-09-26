@@ -148,6 +148,34 @@ function Block({ s }: { s: Section }) {
           </div>
         </section>
       );
+    case 'roster':
+      return (
+        <section className="cp-sec">
+          <header className="cp-sec-head">
+            {s.kicker && <p className="kicker">{s.kicker}</p>}
+            <h2>{s.title}</h2>
+            {s.lede && <p className="cp-lede">{s.lede}</p>}
+          </header>
+          <div className="cp-roster">
+            {s.groups.map((g) => (
+              <div key={g.title} className="cp-card">
+                <h3>{g.title} <span className="cp-count">{g.people.length}</span></h3>
+                <ul>{g.people.map(([n, r]) => <li key={n}><strong>{n}</strong><span>{r}</span></li>)}</ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    case 'bullets':
+      return (
+        <section className="cp-sec">
+          <header className="cp-sec-head">
+            {s.kicker && <p className="kicker">{s.kicker}</p>}
+            <h2>{s.title}</h2>
+          </header>
+          <ul className="cp-bullets">{s.items.map((t) => <li key={t}>{t}</li>)}</ul>
+        </section>
+      );
     case 'cta':
       return (
         <section className="cp-sec cp-cta">

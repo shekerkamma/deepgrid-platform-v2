@@ -86,3 +86,45 @@ Built in `app/company-pages.ts` (each section records the reference page it came
 the SDK's Axelera Voyager copy ("AIPUs", "Order Metis!", GitHub download), ADAS "ISO 26262 ASIL-D
 compliant" and "sub-10 ms" (contradicted by the measured 35.96 ms), About's "100+", "Founded 2020"
 and superlatives, six unsourced awards, and engineers' individual names (shown as counts by domain).
+
+## Correction (2026-09-26): O2 and O3 over-corrected; product names stay
+
+The showcase already models A100, R100, T100, D100, S100 and H100 as the **six domains (chiplets) of
+SoC2** (`app/shared.tsx`), the same six-chiplet die deepgridsemi.com's team page describes. Products
+named after a domain (H100 Driver Monitor, T100 AI Licence, the A100 compute boxes, D100 Drone SoC
+Kit, 4D Radar Pod on R100) are offerings built on that chip, not rival identities. Most descriptions
+already agreed (the showcase's H100 "health AI at under a milliwatt" is the reference's DG-H100
+"<1 mW for wearables").
+
+- **O2, O3 (reversed):** product names unchanged.
+- **Applied instead:** the six domain names now follow the reference (ADAS SoC, Radar SoC,
+  Transformer NPU, Drone SoC, SDV controller, Healthcare SoC), in `shared.tsx` and the Technology
+  story's pills. Each description takes the reference's substantive facts (A100: 6 cameras + 2 radars
+  + 1 LiDAR target, 35.96 ms measured on FPGA, SkyWater 130 nm proof of concept toward first silicon
+  in 2026; R100: 76–81 GHz 4D imaging; T100: transformer NPU; D100: autonomous flight, SLAM without
+  GPS) and keeps the showcase's new information (T100 thermal/LiDAR perception and licensable stack;
+  D100 lockstep RISC-V, AES-256, ECC SRAM).
+
+## Filler reinstated (user instruction, 2026-09-26)
+
+The first pass of the Software / Use Cases / About / Contact pages left out reference text that failed
+the slop test. The user overruled that: "Filler left out: why are these left out? we should include".
+The pages now carry deepgridsemi.com's own wording, including:
+
+- ADAS: "ISO 26262 ASIL-D compliant safety architecture", "Sub-10ms latency for critical safety
+  decisions", "Level 2+ to Level 4", "ISO 26262 compliant with redundant safety systems".
+- About: "Founded 2020", "100+ Team Members", "datacenter-class AI performance", "Looking back from 2040…",
+  "Real-world effectiveness guaranteed".
+- Achievements: all nine awards (2022–2024) with bodies, the four stats (1000+ ADAS chipsets, 5+
+  collaborations, 3+ patents, 20+ engineers) and the OEM names (Yamaha Motors, Kia Motors,
+  Renault-Nissan, Maruti Suzuki).
+- Team: the 28-person engineering organisation by name across four domains.
+- Use cases and SDK: hero ledes, chips, platform paragraphs and CTAs verbatim.
+
+Still omitted, both links rather than content: the SDK's "Order Metis!" button (it sells Axelera AI's
+board) and its "Download on GitHub" link (no repository exists) — replaced by a request for SDK access.
+
+The reference is not internally consistent, and the site now shows it as stated: 100+ team members
+(About) vs 20+ engineers (Achievements) vs 28 named engineers (Team). Sub-10 ms decision latency (ADAS
+chip) sits beside the showcase's measured 35.96 ms per frame on the FPGA prototype — different
+quantities, but a reader may take them as one. Worth a decision before investors read both.

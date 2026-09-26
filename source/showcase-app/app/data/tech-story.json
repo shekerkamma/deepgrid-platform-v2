@@ -68,27 +68,27 @@
    "pills": [
     {
      "value": "A100 · ~7 mm²",
-     "label": "AI / ADAS processor"
+     "label": "ADAS SoC"
     },
     {
      "value": "R100 · ~6 mm²",
-     "label": "Radar DSP"
+     "label": "Radar SoC"
     },
     {
      "value": "T100 · ~7 mm²",
-     "label": "Edge AI, thermal and LiDAR"
+     "label": "Transformer NPU"
     },
     {
      "value": "D100 · ~8 mm²",
-     "label": "Defence secure compute"
+     "label": "Drone SoC"
     },
     {
      "value": "S100 · ~7 mm²",
-     "label": "SDV and vehicle gateway"
+     "label": "SDV controller"
     },
     {
      "value": "H100 · ~7 mm²",
-     "label": "Health AI processor"
+     "label": "Healthcare SoC"
     }
    ],
    "detail": "The A100 houses 64 PCOREs × 512 MACs (32,768 MACs total, a design-target 39.3 TOPS INT8) and supports six-camera MIPI CSI-2, making it the core compute for all autonomous-driving kit tiers. The R100 integrates a 12-bit native ADC for 77 GHz FMCW, 4D radar, and 60 GHz mmWave, with an FFT engine and CFAR detector; the sources state the TI AWR2243 is fully eliminated in RTL. The T100 combines a LiDAR point-cloud DSP, a thermal-camera ISP (LWIR MIPI), and an ONNX runtime, and is the inference engine for the autonomous truck edge product line as well as a licensable IP block carrying a stated 90% margin. The D100 is the largest domain at ~8 mm² and pairs an AES-256 secure enclave with lockstep RISC-V (ASIL-B) and ECC SRAM, targeting humanoid, UGV, and drone SoC applications; the sources note ₹1 Cr in institutional defence revenue received in Q1 2026. The S100 handles vehicle networking via CAN FD ×4, Ethernet TSN (IEEE 802.1Qbv), AUTOSAR Adaptive, OTA updates, and C-V2X/5G-NR, with AIS-140 telematics built in, while the H100 integrates a 24-bit bio-ADC for ECG/EEG/SpO2 inference at a design target of under 1 mW continuous, with driver-fatigue and AEB integration covered by Patent 14.",
