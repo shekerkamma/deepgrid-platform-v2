@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState, type ReactNode } from 'react';
-import { ArrowRight, Layers } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Layers } from 'lucide-react';
 import Silicon from '../silicon';
 import {
   SectionHead,
@@ -454,62 +454,22 @@ export default function Technology({
   chapter?: string;
   domain?: string;
 }) {
-  // #silicon?chapter=domains&domain=R100 (from a product page) opens at that chapter with that domain selected.
-  // Navigation restores the scroll position two frames after a route change (use-navigation.ts), so land a frame later.
+  // Each chapter is its own page (/silicon/<id>); /silicon is the hub. A deep link into a chapter
+  // (/silicon/domains?domain=R100, from a product page) lands on the chapter itself. Navigation restores
+  // the scroll position two frames after a route change (use-navigation.ts), so land a frame later.
+  const at = story.chapters.findIndex((c) => c.id === chapter);
+  const current = at >= 0 ? story.chapters[at] : null;
   useEffect(() => {
-    if (!chapter) return;
+    if (!current || !domain) return;
     const land = () =>
       document
-        .getElementById('tech-' + chapter)
+        .getElementById('tech-' + current.id)
         ?.scrollIntoView({ behavior: 'instant', block: 'start' });
     requestAnimationFrame(() =>
       requestAnimationFrame(() => requestAnimationFrame(land)),
     );
-  }, [chapter]);
-  return (
-    <section className="page-wrap tech-page">
-      <SectionHead
-        title="The silicon behind every product"
-        copy={nb(
-          'One 28 nm chip, SoC2, carries the whole portfolio. Seven short chapters on what it is, why it is built this way, and what still has to be proven. The chip is not yet fabricated: its figures are design targets and derivations.',
-        )}
-      />
-      <figure className="tech-hero-scene">
-        <Scene id="die" sizes="(min-width: 1200px) 1140px, 100vw" eager />
-        <figcaption>
-          SoC2 as it is meant to ship. Concept render, not the floorplan;
-          39.3&nbsp;TOPS is a design target.
-        </figcaption>
-      </figure>
-      <nav
-        className="film-navigation tech-nav"
-        aria-label="Technology chapters"
-      >
-        {story.chapters.map((c) => (
-          <a
-            key={c.id}
-            href={'#tech-' + c.id}
-            onClick={(e) => {
-              if (
-                e.button !== 0 ||
-                e.metaKey ||
-                e.ctrlKey ||
-                e.shiftKey ||
-                e.altKey
-              )
-                return;
-              e.preventDefault();
-              document.getElementById('tech-' + c.id)?.scrollIntoView({
-                behavior: reduced ? 'instant' : 'smooth',
-                block: 'start',
-              });
-            }}
-          >
-            {c.kicker}
-          </a>
-        ))}
-      </nav>
-      {story.chapters.map((c) => {
+  }, [current, domain]);
+  const renderChapter = (c: Chapter) => {
         const copy = (
           <>
             <header className="ov-chapter-head">
@@ -576,7 +536,92 @@ export default function Technology({
             )}
           </section>
         );
-      })}
+  };
+  const chapterNav = (
+    <nav className="film-navigation tech-nav" aria-label="Silicon chapters">
+      {story.chapters.map((c) => (
+        <a
+          key={c.id}
+          href={'#silicon?chapter=' + c.id}
+          aria-current={current?.id === c.id ? 'page' : undefined}
+        >
+          {c.kicker}
+        </a>
+      ))}
+    </nav>
+  );
+  if (current) {
+    const prev = story.chapters[at - 1],
+      next = story.chapters[at + 1];
+    return (
+      <section className="page-wrap tech-page tech-sub">
+        <SectionHead
+          kicker={'Silicon · Chapter ' + (at + 1) + ' of ' + story.chapters.length}
+          title={current.kicker}
+          copy=""
+        />
+        {chapterNav}
+        {renderChapter(current)}
+        <nav className="tech-pager" aria-label="Previous and next chapter">
+          {prev ? (
+            <a href={'#silicon?chapter=' + prev.id} className="tech-pager-prev">
+              <ArrowLeft size={18} aria-hidden="true" />
+              <span><small>Previous</small><strong>{prev.kicker}</strong></span>
+            </a>
+          ) : (
+            <a href="#silicon" className="tech-pager-prev">
+              <ArrowLeft size={18} aria-hidden="true" />
+              <span><small>Back to</small><strong>All chapters</strong></span>
+            </a>
+          )}
+          {next ? (
+            <a href={'#silicon?chapter=' + next.id} className="tech-pager-next">
+              <span><small>Next</small><strong>{next.kicker}</strong></span>
+              <ArrowRight size={18} aria-hidden="true" />
+            </a>
+          ) : (
+            <a href="#silicon" className="tech-pager-next">
+              <span><small>Back to</small><strong>All chapters</strong></span>
+              <ArrowRight size={18} aria-hidden="true" />
+            </a>
+          )}
+        </nav>
+      </section>
+    );
+  }
+  return (
+    <section className="page-wrap tech-page">
+      <SectionHead
+        title="The silicon behind every product"
+        copy={nb(
+          'One 28 nm chip, SoC2, carries the whole portfolio. Seven short chapters on what it is, why it is built this way, and what still has to be proven. The chip is not yet fabricated: its figures are design targets and derivations.',
+        )}
+      />
+      <figure className="tech-hero-scene">
+        <Scene id="die" sizes="(min-width: 1200px) 1140px, 100vw" eager />
+        <figcaption>
+          SoC2 as it is meant to ship. Concept render, not the floorplan;
+          39.3&nbsp;TOPS is a design target.
+        </figcaption>
+      </figure>
+      <ol className="tech-cards" aria-label="Silicon chapters">
+        {story.chapters.map((c, n) => (
+          <li key={c.id}>
+            <a href={'#silicon?chapter=' + c.id} className="tech-card">
+              <span className="tech-card-n">{String(n + 1).padStart(2, '0')}</span>
+              <span className="kicker">{c.kicker}</span>
+              <strong>{nb(c.headline)}</strong>
+              <span className="tech-card-lede">{nb(c.lede)}</span>
+              <span className="tech-card-pills">
+                {c.pills.slice(0, 2).map((x) => (
+                  <span key={x.value + x.label}><b>{nb(x.value)}</b> {nb(x.label)}</span>
+                ))}
+              </span>
+              <span className="tech-card-go">Read the chapter <ArrowRight size={14} aria-hidden="true" /></span>
+            </a>
+          </li>
+        ))}
+      </ol>
       <section
         className="ov-close tech-close"
         aria-labelledby="tech-close-title"

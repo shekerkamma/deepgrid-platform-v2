@@ -1,5 +1,11 @@
 import { SitePage } from '../site-page';
+import { ChapterRedirect } from './chapter-redirect';
 
 export default function Page() {
-  return <SitePage view="silicon" />;
+  return (
+    <>
+      <ChapterRedirect />
+      <SitePage view="silicon" />
+    </>
+  );
 }

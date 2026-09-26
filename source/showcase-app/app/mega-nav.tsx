@@ -34,7 +34,10 @@ export const menus: Menu[] = [
     views: ['silicon'],
     columns: [
       {
-        items: story.chapters.map((c) => ({ label: c.kicker, href: to('silicon?chapter=' + c.id), note: c.headline })),
+        items: [
+          { label: 'All seven chapters', href: to('silicon'), note: 'One 28 nm chip, SoC2, carries the whole portfolio' },
+          ...story.chapters.map((c) => ({ label: c.kicker, href: to('silicon?chapter=' + c.id), note: c.headline })),
+        ],
       },
     ],
   },

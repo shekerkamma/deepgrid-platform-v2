@@ -35,15 +35,18 @@ function urlFor(hash) {
   const [v, q = ''] = hash.replace(/^#/, '').split('?');
   if (!(v in VIEW_PATH)) return BASE + '#' + hash.replace(/^#/, '');
   const params = new URLSearchParams(q); let path = VIEW_PATH[v];
-  if (v === 'portfolio' && params.get('product')) { path += '/' + params.get('product'); params.delete('product'); }
+  const key = { portfolio: 'product', silicon: 'chapter' }[v];
+  if (key && params.get(key)) { path += '/' + params.get(key); params.delete(key); }
   return BASE + path + (params.size ? '?' + params : '');
 }
 /** A URL read back in the old hash vocabulary ('…/demonstrations?v=master&t=325' -> '#film?v=master&t=325'). */
 function hereFrom(href) {
   const u = new URL(href); let rest = u.pathname.slice(new URL(BASE).pathname.length).replace(/\.html$/, ''); let product = '';
+  let chapter = '';
   if (rest.startsWith('products/')) { product = rest.slice(9); rest = 'products'; }
+  if (rest.startsWith('silicon/')) { chapter = rest.slice(8); rest = 'silicon'; }
   const v = (Object.entries(VIEW_PATH).find(([, pth]) => pth === rest) || ['overview'])[0];
-  const q = new URLSearchParams(u.search); if (product) q.set('product', product);
+  const q = new URLSearchParams(u.search); if (product) q.set('product', product); if (chapter) q.set('chapter', chapter);
   return '#' + v + (q.size ? '?' + q : '');
 }
 const OUT = process.argv[3] || 'verify-shots';
@@ -90,6 +93,7 @@ const routes = [
   'portfolio',
   'portfolio?layout=table',
   'silicon',
+  ...['silicon', 'domains', 'sensors', 'measured', 'data', 'cube', 'horizon'].map((c) => 'silicon?chapter=' + c),
   'briefing',
   'film',
   'slides',
@@ -449,15 +453,24 @@ for (const { tag, viewport } of [
 {
   const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
   watch(p, 'technology');
+  // v2: /silicon is a hub of seven chapter cards; each chapter is its own page (/silicon/<id>).
   await p.goto(urlFor('silicon'), { waitUntil: 'networkidle' });
   const BARE = /^(read|open|open slide|pdf|download|more|link|source)$/i;
-  const chapters = await p.evaluate(async () =>
+  const cards = await p.evaluate(() => [...document.querySelectorAll('.tech-cards a.tech-card')].map((a) => a.getAttribute('href')));
+  if (cards.length !== 7 || cards.some((h) => !/^#silicon\?chapter=\w+$/.test(h)))
+    fail(`silicon hub: ${cards.length} chapter cards ${JSON.stringify(cards)}`);
+  const chapters = [];
+  for (const h of cards) {
+    await p.goto(urlFor(h), { waitUntil: 'networkidle' });
+    chapters.push(...(await p.evaluate(async () =>
     Promise.all(
       [...document.querySelectorAll('.tech-chapter')].map(async (c) => ({
         id: c.id,
+        pages: document.querySelectorAll('.tech-chapter').length,
+        pager: document.querySelectorAll('.tech-pager a').length,
         kicker:
           document
-            .querySelector(`.tech-nav a[href="#${c.id}"]`)
+            .querySelector('.tech-nav a[aria-current="page"]')
             ?.textContent.trim() || '',
         headline: c.querySelector('h2')?.textContent.trim() || '',
         lede:
@@ -479,8 +492,10 @@ for (const { tag, viewport } of [
           })),
         ),
       })),
-    ),
-  );
+    ))));
+  }
+  for (const c of chapters)
+    if (c.pages !== 1 || c.pager !== 2) fail(`silicon ${c.id}: ${c.pages} chapters on the page, ${c.pager} pager links`);
   if (chapters.length !== 7)
     fail(`technology: ${chapters.length} chapters, expected 7`);
   for (const c of chapters) {
@@ -502,6 +517,7 @@ for (const { tag, viewport } of [
       );
   }
   // a deck reference opens that slide
+  await p.goto(urlFor('silicon?chapter=cube'), { waitUntil: 'networkidle' });
   await p.click('#tech-cube .tech-refs a[href^="#slides?slide="]');
   await p.waitForURL(/\/investors\/portfolio-deck\?/, { timeout: 15000 }).catch(() => {});
   if (!hereFrom(await p.evaluate(() => location.href)).startsWith('#slides?slide='))
@@ -515,7 +531,7 @@ for (const { tag, viewport } of [
     .catch(() =>
       fail('radar page: no link to its domain on the Technology page'),
     );
-  await p.waitForURL(/\/silicon\?/, { timeout: 15000 }).catch(() => {});
+  await p.waitForURL(/\/silicon\/domains/, { timeout: 15000 }).catch(() => {});
   await p.waitForFunction(() => { const t = document.getElementById('tech-domains')?.getBoundingClientRect().top; return t !== undefined && t > -5 && t < 200; }, null, { timeout: 8000 }).catch(() => {});
   const landed = await p.evaluate(() => ({
     tab:
@@ -557,7 +573,7 @@ for (const { tag, viewport } of [
       '.usecase-explorer .related',
       '#portfolio?product=ad2',
     ],
-    ['silicon', '#tech-sensors .related', '#portfolio?product=ad2'],
+    ['silicon?chapter=sensors', '#tech-sensors .related', '#portfolio?product=ad2'],
   ]) {
     await p.goto(urlFor('' + hash), { waitUntil: 'networkidle' });
     await p.waitForTimeout(400);
@@ -585,14 +601,14 @@ for (const { tag, viewport } of [
   await p.goto(urlFor('film?v=cube'), { waitUntil: 'networkidle' });
   await p.click('#film-cube .related a[href="#silicon?chapter=cube"]');
   // v2: the link loads the Silicon page, so wait for it and for the chapter to land, not a fixed delay.
-  await p.waitForURL(/\/silicon\?chapter=cube/, { timeout: 15000 }).catch(() => {});
-  await p.waitForFunction(() => { const t = document.getElementById('tech-cube')?.getBoundingClientRect().top; return t !== undefined && t > -5 && t < 200; }, null, { timeout: 8000 }).catch(() => {});
+  await p.waitForURL(/\/silicon\/cube/, { timeout: 15000 }).catch(() => {});
+  await p.waitForFunction(() => { const t = document.getElementById('tech-cube')?.getBoundingClientRect().top; return t !== undefined && t > -5 && t < 900; }, null, { timeout: 8000 }).catch(() => {});
   const top = await p.evaluate(() =>
     Math.round(
       document.getElementById('tech-cube')?.getBoundingClientRect().top ?? -1,
     ),
   );
-  if (top < -5 || top > 200)
+  if (top < -5 || top > 900)
     fail(`related link from the cube film landed with the chapter at ${top}px`);
   console.log(
     'related: 6 sections cross-link, and a followed link lands on its chapter',
@@ -708,13 +724,14 @@ for (const { tag, viewport } of [
   console.log(
     `storyboards: ${boards.length} films in beats, walkthrough in ${walk.chapters} chapters with ${walk.lines} product-line moments`,
   );
-  // Silicon platform figures carry what they show and why it matters
-  await p.goto(urlFor('silicon'), { waitUntil: 'networkidle' });
-  const figs = await p.evaluate(() =>
-    [...document.querySelectorAll('.tech-figure figcaption')].map(
-      (c) => c.querySelectorAll('span').length,
-    ),
-  );
+  // Silicon platform figures carry what they show and why it matters (across the seven chapter pages)
+  const figs = [];
+  for (const id of ['silicon', 'domains', 'sensors', 'measured', 'data', 'cube', 'horizon']) {
+    await p.goto(urlFor('silicon?chapter=' + id), { waitUntil: 'networkidle' });
+    figs.push(...(await p.evaluate(() =>
+      [...document.querySelectorAll('.tech-figure figcaption')].map((c) => c.querySelectorAll('span').length),
+    )));
+  }
   if (figs.length !== 4 || figs.some((n) => n < 2))
     fail(
       `silicon figures: ${JSON.stringify(figs)} (want 4, each with what it shows and why it matters)`,

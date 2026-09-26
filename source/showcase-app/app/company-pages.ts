@@ -21,6 +21,7 @@ export type Section =
   | { kind: 'figures'; kicker?: string; title: string; items: { src: string; alt: string; caption: string; w: number; h: number }[]; from: string }
   | { kind: 'contact'; from: string }
   | { kind: 'roster'; kicker?: string; title: string; lede?: string; groups: { title: string; people: [string, string][] }[]; from: string }
+  | { kind: 'films'; kicker?: string; title: string; lede?: string; ids: string[]; from: string }
   | { kind: 'bullets'; kicker?: string; title: string; items: string[]; from: string }
   | { kind: 'cta'; title: string; lede: string; actions: { label: string; href: string; primary?: boolean }[]; from: string };
 
@@ -105,6 +106,7 @@ export const companyPages: CompanyPage[] = [
           { title: 'Lane departure warning', meta: 'AIS-188 · CMVR 98(6)', href: uc('UC-05') },
           { title: 'Government and PSU perception kit', meta: 'PPP-MII Order 2017 · GFR 153(iii)', href: uc('UC-06') },
         ] },
+      { kind: 'films', kicker: 'See it running', title: 'The ADAS stack in simulation', lede: 'Narrated simulations of the truck kit, the compute box and D-Drive.', ids: ['truck', 'computebox', 'ddrive'], from: 'showcase films' },
       { kind: 'cta', title: 'Build the Future of Autonomous Driving', lede: 'Partner with Deepgrid to accelerate your ADAS development', from: REF + '/use-cases/adas',
         actions: [ { label: 'Contact us', href: 'contact', primary: true }, { label: 'The AD2 truck kit', href: to('portfolio?product=ad2') }, { label: 'DGrid SDK', href: 'software/dgrid-sdk' } ] },
     ],
@@ -163,6 +165,7 @@ export const companyPages: CompanyPage[] = [
           { title: 'Fleet Intelligence', text: 'Real-time analytics and predictive insights' },
           { title: 'Asset Tracking', text: 'GPS and IoT integration for complete visibility' },
         ] },
+      { kind: 'films', kicker: 'See it running', title: 'A container terminal twin', lede: 'Positioning, routing and dispatch under quay cranes.', ids: ['yard'], from: 'showcase films' },
       { kind: 'cta', title: 'Transform Your Mobility Operations', lede: 'Partner with Deepgrid to build intelligent transportation systems', from: REF + '/use-cases/mobility',
         actions: [ { label: 'Contact us', href: 'contact', primary: true }, { label: 'Seaport AGV', href: to('portfolio?product=agv') }, { label: 'Autonomous TaaS', href: to('portfolio?product=taas') } ] },
     ],
@@ -186,6 +189,7 @@ export const companyPages: CompanyPage[] = [
           { title: 'Motion Planning', text: 'Collision-free path planning and trajectory optimization' },
           { title: 'Fleet Management', text: 'Coordinated control of multiple robots and AGVs' },
         ] },
+      { kind: 'films', kicker: 'See it running', title: 'Indoor autonomy', lede: 'A warehouse truck that steers, brakes and stops for people.', ids: ['forklift'], from: 'showcase films' },
       { kind: 'cta', title: 'Transform Your Manufacturing Operations', lede: 'Partner with Deepgrid to build intelligent robotic systems', from: REF + '/use-cases/robotics',
         actions: [ { label: 'Contact us', href: 'contact', primary: true }, { label: 'AD1 indoor L4 kit', href: to('portfolio?product=ad1') } ] },
     ],

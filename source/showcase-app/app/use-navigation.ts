@@ -1,6 +1,6 @@
 'use client';
 import {useEffect, useState} from 'react';
-import {isView, to} from './routes';
+import {isView, pathParam, to} from './routes';
 
 // v2: every view is its own page. The interface the views call is unchanged (navigate, go, update,
 // openSlide), but moving to another view is now a page load to its real URL, and a view's own state
@@ -35,8 +35,9 @@ export function useNavigation(view: string, fixed: Record<string, string> = {}) 
   const go = (hash: string, replace = false) => {
     const [v, q = ''] = hash.replace(/^#/, '').split('?');
     const next = new URLSearchParams(q);
-    const sameProduct = (next.get('product') || '') === (fixed.product || '');
-    if (v === view && sameProduct) {
+    const key = pathParam[v];
+    const samePage = !key || (next.get(key) || '') === (fixed[key] || '');
+    if (v === view && samePage) {
       for (const k of Object.keys(fixed)) next.delete(k);
       const url = location.pathname + (next.size ? '?' + next : '');
       history[replace ? 'replaceState' : 'pushState'](history.state, '', url);

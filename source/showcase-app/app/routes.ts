@@ -19,6 +19,10 @@ export const viewPath: Record<string, string> = {
   briefing: 'investors/ask',
 };
 
+/** Views whose subject is part of the path: a product (/products/ad2) and a Silicon chapter
+ *  (/silicon/cube). Other ?chapter= values (the memorandum's) stay in the query string. */
+export const pathParam: Record<string, string> = { portfolio: 'product', silicon: 'chapter' };
+
 export const isView = (v: string) => Object.prototype.hasOwnProperty.call(viewPath, v);
 
 /** '#portfolio?product=ad2&x=1' or 'portfolio?product=ad2' → '/…/products/ad2?x=1'.
@@ -29,8 +33,8 @@ export function to(hash: string): string {
   if (!isView(v)) return '#' + raw;
   const params = new URLSearchParams(q);
   let path = viewPath[v];
-  const product = v === 'portfolio' ? params.get('product') : null;
-  if (product) { path += '/' + product; params.delete('product'); }
+  const key = pathParam[v], sub = key ? params.get(key) : null;
+  if (key && sub) { path += '/' + sub; params.delete(key); }
   return BASE + path + (params.size ? '?' + params : '');
 }
 

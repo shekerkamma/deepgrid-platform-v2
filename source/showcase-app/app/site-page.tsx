@@ -1,4 +1,5 @@
 'use client';
+import story from './data/tech-story.json';
 import { Fragment, useEffect, useState, lazy, Suspense } from 'react';
 import { ArrowUpRight, ArrowRight, ArrowLeft, Menu } from 'lucide-react';
 import {
@@ -40,7 +41,7 @@ const titles: Record<string, string> = {
   investment: 'Investment case · DeepGrid Semi',
 };
 
-export function SitePage({ view: pageView, product: productId, page: pageId }: { view: string; product?: string; page?: string }) {
+export function SitePage({ view: pageView, product: productId, page: pageId, chapter: chapterId }: { view: string; product?: string; page?: string; chapter?: string }) {
   const companyPage = pageId ? pageById(pageId) : undefined;
   const {
     route,
@@ -49,7 +50,7 @@ export function SitePage({ view: pageView, product: productId, page: pageId }: {
     update,
     openSlide,
     seeded,
-  } = useNavigation(pageView, productId ? { product: productId } : {});
+  } = useNavigation(pageView, productId ? { product: productId } : chapterId ? { chapter: chapterId } : {});
   useHashLinks();
   const view = route.view,
     params = route.params,
@@ -90,8 +91,9 @@ export function SitePage({ view: pageView, product: productId, page: pageId }: {
     return () => q.removeEventListener('change', motion);
   }, []);
   useEffect(() => {
-    document.title = companyPage ? companyPage.title + ' · DeepGrid Semi' : titles[view] || titles.overview;
-  }, [view, companyPage]);
+    const ch = chapterId && story.chapters.find((c) => c.id === chapterId);
+    document.title = companyPage ? companyPage.title + ' · DeepGrid Semi' : ch ? ch.kicker + ' · Silicon · DeepGrid Semi' : titles[view] || titles.overview;
+  }, [view, companyPage, chapterId]);
   useScrollVars();
   useReveal(
     view +
@@ -102,6 +104,7 @@ export function SitePage({ view: pageView, product: productId, page: pageId }: {
 
   const viewIndex = navigation.findIndex((n) => n[0] === view),
     hereLabel = companyPage ? companyPage.label : navigation[Math.max(0, viewIndex)][1],
+    chapterTitle = chapterId ? story.chapters.find((c) => c.id === chapterId)?.kicker : undefined,
     returnTo = params.get('from'),
     returnProduct = returnTo
       ? products.find(
@@ -167,7 +170,15 @@ export function SitePage({ view: pageView, product: productId, page: pageId }: {
               Home
             </a>
             <span aria-hidden="true">/</span>
-            <span aria-current="page">{hereLabel}</span>
+            {chapterTitle ? (
+              <>
+                <a href={to('silicon')}>{hereLabel}</a>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page">{chapterTitle}</span>
+              </>
+            ) : (
+              <span aria-current="page">{hereLabel}</span>
+            )}
             {returnTo && (
               <button className="context-back" onClick={() => go(returnTo)}>
                 <ArrowLeft size={16} aria-hidden="true" />
@@ -260,7 +271,7 @@ export function SitePage({ view: pageView, product: productId, page: pageId }: {
           />
         )}
         </Fragment>
-        {!companyPage && view !== 'overview' && !(view === 'portfolio' && product) && (
+        {!companyPage && !chapterId && view !== 'overview' && !(view === 'portfolio' && product) && (
           <nav className="section-pagination" aria-label="Section navigation">
             {viewIndex > 0 ? (
               <a
