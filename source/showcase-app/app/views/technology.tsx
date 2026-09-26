@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowLeft, ArrowRight, Layers } from 'lucide-react';
 import Silicon from '../silicon';
 import {
@@ -29,13 +29,12 @@ const figureNotes = (
 
 type Chapter = (typeof story.chapters)[number];
 // Two chapters are laid out side by side, so the page does not repeat one stacked shape seven times: the die beside
-// the case for it, and the cube (the differentiator) with its film leading. Only the turns carry a kicker: the
-// scroll-craft floor allows one eyebrow per three sections, and the chapter nav already names every chapter.
+// the case for it, and the cube (the differentiator) with its film leading. A chapter page carries no section
+// eyebrow: its title already names the chapter (scroll-craft allows one eyebrow per three sections).
 const SPLIT: Record<string, 'lead' | 'trail'> = {
   silicon: 'lead',
   cube: 'trail',
 };
-const SIGNPOSTS = new Set(['measured', 'horizon']);
 const FRAME = 33.3,
   FUSION = 8.6;
 const channels = [
@@ -473,7 +472,6 @@ export default function Technology({
         const copy = (
           <>
             <header className="ov-chapter-head">
-              {SIGNPOSTS.has(c.id) && <p className="kicker">{c.kicker}</p>}
               <h2 id={'tech-h-' + c.id}>{nb(c.headline)}</h2>
               <p>{nb(c.lede)}</p>
             </header>
@@ -537,8 +535,14 @@ export default function Technology({
           </section>
         );
   };
+  // On a phone the chapter bar is one scrolling row; bring the current chapter into it.
+  const navRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const nav = navRef.current, on = nav?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (nav && on && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = on.offsetLeft - 16;
+  }, [chapter]);
   const chapterNav = (
-    <nav className="film-navigation tech-nav" aria-label="Silicon chapters">
+    <nav ref={navRef} className="film-navigation tech-nav" aria-label="Silicon chapters">
       {story.chapters.map((c) => (
         <a
           key={c.id}
@@ -608,7 +612,6 @@ export default function Technology({
         {story.chapters.map((c, n) => (
           <li key={c.id}>
             <a href={'#silicon?chapter=' + c.id} className="tech-card">
-              <span className="tech-card-n">{String(n + 1).padStart(2, '0')}</span>
               <span className="kicker">{c.kicker}</span>
               <strong>{nb(c.headline)}</strong>
               <span className="tech-card-lede">{nb(c.lede)}</span>

@@ -143,7 +143,6 @@
 .tech-card:hover { border-color: var(--copper); background: var(--surface-2); transform: translateY(-2px); }
 .tech-card .kicker { margin: 0; }
 .tech-card strong { font-family: var(--font-display, inherit); font-size: 1.2rem; font-weight: 400; line-height: 1.25; text-wrap: balance; }
-.tech-card-n { position: absolute; top: 1.1rem; right: 1.25rem; color: var(--ink-3); font-size: var(--sc-t-meta); font-variant-numeric: tabular-nums; }
 .tech-card-lede { color: var(--ink-2); font-size: var(--sc-t-control); line-height: 1.55; }
 .tech-card-pills { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .25rem; }
 .tech-card-pills > span { border: 1px solid var(--line-soft); border-radius: 999px; padding: .2rem .6rem; font-size: var(--sc-t-meta); color: var(--ink-2); }
@@ -159,3 +158,19 @@
 .tech-pager svg { color: var(--copper); flex: none; }
 @media (max-width: 620px) { .tech-pager { grid-template-columns: 1fr; } .tech-pager-next { grid-column: 1; } }
 @media (prefers-reduced-motion: reduce) { .tech-card { transition: none; } .tech-card:hover { transform: none; } }
+
+/* Review 2026-09-26 (WCAG 2.2 + Web Interface Guidelines). */
+/* 2.4.11 Focus Not Obscured: the sticky menu (59px, 52px on phones) must not cover a focused element. */
+html { scroll-padding-top: calc(59px + 1rem); }
+@media (max-width: 800px) { html { scroll-padding-top: calc(52px + 1rem); } }
+/* 2.5.8 Target Size: standalone links at least 24px tall. */
+.footer-bottom a { display: inline-flex; align-items: center; gap: .3rem; min-height: 24px; }
+/* The strap line's font shorthand did not resolve and fell through to the body's Arial. */
+.topline { font-family: var(--font-mono, 'Courier New', monospace); font-size: var(--text-meta, .75rem); }
+.ramp-chart:focus-visible { outline: 2px solid var(--copper); outline-offset: 4px; }
+/* Phone: the seven-chapter bar is one row that scrolls sideways, so the chapter's headline stays in the first screen. */
+@media (max-width: 620px) {
+  .tech-sub .tech-nav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+  .tech-sub .tech-nav::-webkit-scrollbar { display: none; }
+  .tech-sub .tech-nav a { flex: none; }
+}

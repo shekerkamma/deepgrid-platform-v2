@@ -378,7 +378,7 @@ function RampChart() {
       .map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1))
       .join(' ');
   return (
-    <figure className="ramp-chart">
+    <figure className="ramp-chart" tabIndex={0} aria-label="Revenue ramp chart, scrolls sideways on small screens">
       <svg
         viewBox={`0 0 ${W} ${H}`}
         role="img"
