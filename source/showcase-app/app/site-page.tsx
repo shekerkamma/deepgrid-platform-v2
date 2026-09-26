@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/sheet';
 import { useNavigation, useHashLinks } from './use-navigation';
 import { to } from './routes';
+import { MegaNav } from './mega-nav';
 import { useReveal, useScrollVars } from './motion';
 import { Brand, groups, navigation, products, type Product } from './shared';
 import Overview from './views/overview';
@@ -104,22 +105,6 @@ export function SitePage({ view: pageView, product: productId }: { view: string;
             p.id === new URLSearchParams(returnTo.split('?')[1]).get('product'),
         )
       : null;
-  const navLinks = navigation.map(([id, title]) => (
-    <a
-      href={to(id)}
-      key={id}
-      className={view === id ? 'active' : ''}
-      onClick={(e) => {
-        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
-          return;
-        e.preventDefault();
-        navigate(id);
-      }}
-      aria-current={view === id ? 'page' : undefined}
-    >
-      {title}
-    </a>
-  ));
 
   return (
     <div className={'site-shell view-' + view}>
@@ -156,9 +141,7 @@ export function SitePage({ view: pageView, product: productId }: { view: string;
           <Menu aria-hidden="true" />
         </button>
       </header>
-      <nav className="main-nav" aria-label="Primary navigation">
-        {navLinks}
-      </nav>
+      <MegaNav view={view} />
       <main id="main" tabIndex={-1}>
         {view !== 'overview' && (
           <nav className="breadcrumbs" aria-label="Breadcrumb">
@@ -353,7 +336,7 @@ export function SitePage({ view: pageView, product: productId }: { view: string;
             <span className="wordmark">deepgrid</span>
           </SheetTitle>
           <SheetDescription>Explore the DeepGrid platform</SheetDescription>
-          <nav>{navLinks}</nav>
+          <MegaNav view={view} label="Site menu" onNavigate={() => setMenu(false)} />
         </SheetContent>
       </Sheet>
     </div>

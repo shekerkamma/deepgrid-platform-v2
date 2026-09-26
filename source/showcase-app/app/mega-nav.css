@@ -1,0 +1,54 @@
+/* Primary menu (app/mega-nav.tsx): deepgridsemi.com's structure, the showcase's look. Panels hang
+   from the whole bar, so the bar must not clip them (the base .main-nav scrolls horizontally). */
+.mega-nav { overflow: visible; position: sticky; align-items: stretch; }
+.mega-nav > a, .mega-trigger {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: var(--sc-t-control); font-weight: 500; color: var(--ink-2);
+  padding: .8rem .95rem; background: transparent; border: 0; cursor: pointer;
+  transition: color .15s ease;
+}
+.mega-nav > a:hover, .mega-trigger:hover, .mega-trigger[aria-expanded='true'],
+.mega-nav > a.active, .mega-trigger.active { color: var(--ink); }
+.mega-nav > a.active, .mega-trigger.active { box-shadow: inset 0 -2px 0 var(--copper); }
+.mega-trigger svg { transition: transform .15s ease; }
+.mega-trigger[aria-expanded='true'] svg { transform: rotate(180deg); }
+.mega-home img { width: 20px; height: 20px; object-fit: contain; }
+.mega-item { position: static; display: flex; }
+.mega-nav :focus-visible { outline: 2px solid var(--copper); outline-offset: -2px; }
+
+.mega-panel {
+  position: absolute; left: var(--gutter); right: var(--gutter); top: 100%;
+  display: grid; gap: 1.75rem 2rem; padding: 1.5rem 1.75rem 1.75rem;
+  background: var(--surface); border: 1px solid var(--line); border-top: 0;
+  border-radius: 0 0 10px 10px; box-shadow: 0 24px 48px rgb(0 0 0 / .45);
+  z-index: 40;
+}
+.mega-panel[hidden] { display: none; }
+.mega-cols-1 { grid-template-columns: minmax(0, 1fr); max-width: 44rem; }
+.mega-cols-5 { grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, .9fr); }
+.mega-col-title { margin: 0 0 .6rem; font-size: var(--sc-t-meta); letter-spacing: var(--sc-track-meta); text-transform: uppercase; color: var(--copper); }
+.mega-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .15rem; }
+.mega-col a { display: grid; gap: .15rem; padding: .45rem .55rem; margin-inline: -.55rem; border-radius: 6px; color: var(--ink); transition: background-color .15s ease; }
+.mega-col a:hover { background: var(--surface-2); }
+.mega-col a span { font-size: var(--sc-t-control); }
+.mega-col a small { font-size: var(--sc-t-meta); color: var(--ink-3); line-height: 1.45; }
+.mega-cols-1 .mega-col ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .25rem 1.5rem; }
+
+/* Phone sheet: the same groups, stacked; panels open inline under their button. */
+.navigation-sheet .mega-nav { position: static; display: grid; gap: 0; padding: 0; background: none; border: 0; backdrop-filter: none; }
+.navigation-sheet .mega-nav::before { display: none; }
+.navigation-sheet .mega-item { display: grid; }
+.navigation-sheet .mega-nav > a, .navigation-sheet .mega-trigger { justify-content: space-between; padding: .9rem 0; border-bottom: 1px solid var(--line-soft); box-shadow: none; }
+.navigation-sheet .mega-panel { position: static; box-shadow: none; border: 0; padding: .5rem 0 1rem; background: none; grid-template-columns: 1fr; }
+.navigation-sheet .mega-cols-1 .mega-col ul { grid-template-columns: 1fr; }
+.navigation-sheet .mega-col a small { display: none; }
+
+@media (max-width: 1150px) { .mega-cols-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .mega-trigger svg, .mega-nav > a, .mega-trigger, .mega-col a { transition: none; } }
+.navigation-sheet .mega-nav { width: 100%; }
+.navigation-sheet .mega-nav > a { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: .6rem; width: 100%; background: none; }
+.navigation-sheet .mega-nav > a.active { color: var(--copper); }
+.navigation-sheet .mega-trigger { width: 100%; }
+.navigation-sheet nav.mega-nav { align-self: stretch; margin-top: 25px; }
+.navigation-sheet .mega-nav > a { font-size: var(--sc-t-control); font-weight: 500; }
+.navigation-sheet nav.mega-nav { grid-template-columns: minmax(0, 1fr); justify-content: stretch; }
