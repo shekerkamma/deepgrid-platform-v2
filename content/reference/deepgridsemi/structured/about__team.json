@@ -1,0 +1,68 @@
+[
+ {
+  "heading": "Leadership & Team",
+  "sub": "",
+  "paras": [
+   "Meet the innovators driving the future of AI acceleration"
+  ],
+  "items": [],
+  "images": [
+   {
+    "src": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&h=1080&fit=crop",
+    "alt": "Leadership Team"
+   }
+  ],
+  "buttons": []
+ },
+ {
+  "heading": "Aravind Prasad G",
+  "sub": "",
+  "paras": [
+   "01 — FOUNDING TEAM",
+   "FOUNDER & CHIEF EXECUTIVE OFFICER",
+   "Founder & Chief Executive Officer",
+   "B.Tech ECE, Bangalore University · Research Associate, IISc Bangalore (Speech Signal Processing) · Stanford SDRM, 2007",
+   "CHIEF TECHNOLOGY OFFICER",
+   "Chief Technology Officer · Silicon Architecture",
+   "M.Sc. Physics, IIT Gandhinagar · On track to full-time by Q1 FY28",
+   "02 — BOARD & OFFICERS"
+  ],
+  "items": [
+   {
+    "title": "Prashant Sadanand",
+    "text": [
+     "Part-Time Director · CMO"
+    ]
+   },
+   {
+    "title": "Jayesh Loya",
+    "text": [
+     "Virtual CFO"
+    ]
+   },
+   {
+    "title": "Krishna Mohan R",
+    "text": [
+     "Independent Director"
+    ]
+   }
+  ],
+  "images": [
+   {
+    "src": "/aravind.png",
+    "alt": "Aravind Prasad G"
+   },
+   {
+    "src": "/prashanth.png",
+    "alt": "Prashant Sadanand"
+   }
+  ],
+  "buttons": [
+   "See Bio",
+   "See Bio",
+   "See Bio",
+   "See Bio",
+   "See Bio"
+  ]
+ }
+]

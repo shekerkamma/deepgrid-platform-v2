@@ -1,0 +1,52 @@
+[
+ {
+  "heading": "Get in Touch",
+  "sub": "",
+  "paras": [
+   "Let's discuss how Deepgrid Semi can power your AI innovation"
+  ],
+  "items": [],
+  "images": [],
+  "buttons": []
+ },
+ {
+  "heading": "",
+  "sub": "",
+  "paras": [],
+  "items": [
+   {
+    "title": "Send Us a Message",
+    "text": []
+   },
+   {
+    "title": "Contact Information",
+    "text": []
+   },
+   {
+    "title": "Follow Us",
+    "text": []
+   },
+   {
+    "title": "Schedule a Demo",
+    "text": [
+     "See our AI accelerators in action with a personalized demonstration"
+    ]
+   }
+  ],
+  "images": [],
+  "buttons": [
+   "Send Message",
+   "group@deepgrid.in",
+   "T-Hub, Floor-7 Hyderabad, India",
+   "Book Demo"
+  ]
+ },
+ {
+  "heading": "Visit Our Office",
+  "sub": "",
+  "paras": [],
+  "items": [],
+  "images": [],
+  "buttons": []
+ }
+]

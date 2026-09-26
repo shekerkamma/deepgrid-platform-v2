@@ -1,0 +1,88 @@
+[
+ {
+  "heading": "Advanced Driver Assistance Systems",
+  "sub": "",
+  "paras": [
+   "Powering next-generation ADAS with real-time AI perception, sensor fusion, and intelligent decision-making for safer autonomous driving.",
+   "Multi-sensor fusion for complete environmental awareness",
+   "ISO 26262 ASIL-D compliant safety architecture",
+   "Sub-10ms latency for critical safety decisions"
+  ],
+  "items": [
+   {
+    "title": "360° Perception",
+    "text": []
+   },
+   {
+    "title": "Safety First",
+    "text": []
+   },
+   {
+    "title": "Real-Time Processing",
+    "text": []
+   }
+  ],
+  "images": [],
+  "buttons": [
+   "Explore Solutions →",
+   "View Demo"
+  ]
+ },
+ {
+  "heading": "ADAS AI Platform",
+  "sub": "",
+  "paras": [
+   "Real-time perception + Intelligent decision-making + Safety-critical execution",
+   "The automotive industry is rapidly evolving towards autonomous driving, requiring sophisticated AI systems that can perceive, understand, and react to complex driving scenarios in real-time. Deepgrid's ADAS AI Platform delivers the computational power and safety-critical reliability needed for Level 2+ to Level 4 autonomous driving systems, combining advanced sensor fusion, AI perception, and intelligent path planning."
+  ],
+  "items": [],
+  "images": [],
+  "buttons": [
+   "Learn More",
+   "Benchmarks"
+  ]
+ },
+ {
+  "heading": "Deepgrid's ADAS Solution Stack",
+  "sub": "",
+  "paras": [
+   "Complete AI acceleration platform for autonomous driving"
+  ],
+  "items": [
+   {
+    "title": "Sensor Fusion",
+    "text": [
+     "Camera, radar, and lidar integration for comprehensive perception"
+    ]
+   },
+   {
+    "title": "AI Decision Engine",
+    "text": [
+     "Real-time path planning and obstacle avoidance"
+    ]
+   },
+   {
+    "title": "Safety Validation",
+    "text": [
+     "ISO 26262 compliant with redundant safety systems"
+    ]
+   }
+  ],
+  "images": [],
+  "buttons": []
+ },
+ {
+  "heading": "Build the Future of Autonomous Driving",
+  "sub": "",
+  "paras": [
+   "Partner with Deepgrid to accelerate your ADAS development"
+  ],
+  "items": [],
+  "images": [],
+  "buttons": [
+   "Contact Us -> /contact",
+   "View DG-A100 SoC -> /products/dg-a100",
+   "Download SDK -> /software/dgrid-sdk"
+  ]
+ }
+]

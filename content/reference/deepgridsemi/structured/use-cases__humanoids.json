@@ -1,0 +1,222 @@
+[
+ {
+  "heading": "Humanoid Robotics",
+  "sub": "",
+  "paras": [
+   "Enabling the next generation of humanoid robots with real-time AI perception, decision-making, and human-like interaction.",
+   "Advanced motor control algorithms for balance and locomotion",
+   "Natural language processing for intuitive voice commands",
+   "Remote control and monitoring from anywhere in real-time"
+  ],
+  "items": [
+   {
+    "title": "Motion Control AI",
+    "text": []
+   },
+   {
+    "title": "Voice Activated Control",
+    "text": []
+   },
+   {
+    "title": "Mobile Teleoperations",
+    "text": []
+   }
+  ],
+  "images": [],
+  "buttons": [
+   "Explore Solutions →",
+   "View Demo"
+  ]
+ },
+ {
+  "heading": "Humanoid AI Platform",
+  "sub": "",
+  "paras": [
+   "Real-time perception + Adaptive intelligence + Human-like interaction",
+   "The future belongs to intelligent machines that seamlessly blend perception, reasoning, and action. As the world accelerates toward AI-driven autonomy, the need for robots that can move, think, and interact like humans has never been greater. Deepgrid's Humanoid AI Platform pioneers this transformation—combining real-time perception, adaptive intelligence, and precision motion control to create robots that assist, collaborate, and evolve across industries from healthcare to logistics."
+  ],
+  "items": [],
+  "images": [],
+  "buttons": [
+   "Coming Soon",
+   "Benchmarks"
+  ]
+ },
+ {
+  "heading": "Deepgrid's Humanoid Robotics Stack",
+  "sub": "",
+  "paras": [
+   "Complete AI acceleration platform for humanoid intelligence"
+  ],
+  "items": [
+   {
+    "title": "Motion Control AI",
+    "text": [
+     "Advanced motor control algorithms for balance and locomotion"
+    ]
+   },
+   {
+    "title": "Voice Activated Control",
+    "text": [
+     "Natural language processing for intuitive voice commands"
+    ]
+   },
+   {
+    "title": "Mobile Teleoperations",
+    "text": [
+     "Remote control and monitoring from anywhere in real-time"
+    ]
+   }
+  ],
+  "images": [],
+  "buttons": []
+ },
+ {
+  "heading": "How It Works",
+  "sub": "",
+  "paras": [
+   "From perception to action — a seamless AI pipeline that brings humanoid robots to life"
+  ],
+  "items": [
+   {
+    "title": "Perception",
+    "text": [
+     "3D environment scanning and object recognition"
+    ]
+   },
+   {
+    "title": "Interpretation",
+    "text": [
+     "AI reasoning and context-aware decision making"
+    ]
+   },
+   {
+    "title": "Action",
+    "text": [
+     "Precise motor control and adaptive behavior"
+    ]
+   },
+   {
+    "title": "Perception",
+    "text": [
+     "Multi-sensor fusion for 3D environment understanding"
+    ]
+   },
+   {
+    "title": "Interpretation",
+    "text": [
+     "AI reasoning and context-aware decision making"
+    ]
+   },
+   {
+    "title": "Planning",
+    "text": [
+     "Motion planning and task sequencing"
+    ]
+   },
+   {
+    "title": "Action",
+    "text": [
+     "Precise motor control and adaptive behavior"
+    ]
+   }
+  ],
+  "images": [],
+  "buttons": []
+ },
+ {
+  "heading": "Key Capabilities",
+  "sub": "",
+  "paras": [
+   "Advanced features enabling human-like intelligence"
+  ],
+  "items": [
+   {
+    "title": "3D Vision",
+    "text": [
+     "Real-time depth perception at 30 FPS"
+    ]
+   },
+   {
+    "title": "Natural Language",
+    "text": [
+     "Voice interaction and command understanding"
+    ]
+   },
+   {
+    "title": "Dexterous Control",
+    "text": [
+     "7 DOF with sub-millimeter precision"
+    ]
+   },
+   {
+    "title": "Adaptive Learning",
+    "text": [
+     "Trains through real-world video input"
+    ]
+   }
+  ],
+  "images": [
+   {
+    "src": "/3dvision.png",
+    "alt": "3D Vision"
+   },
+   {
+    "src": "/naturallanguage.png",
+    "alt": "Natural Language"
+   },
+   {
+    "src": "/roboarm.png",
+    "alt": "Dexterous Control"
+   },
+   {
+    "src": "/adaptivelearning.png",
+    "alt": "Adaptive Learning"
+   }
+  ],
+  "buttons": []
+ },
+ {
+  "heading": "Future Roadmap",
+  "sub": "",
+  "paras": [
+   "What's next for humanoid robotics"
+  ],
+  "items": [
+   {
+    "title": "Emotional Intelligence",
+    "text": [
+     "Advanced facial recognition and emotion detection for empathetic human interaction"
+    ]
+   },
+   {
+    "title": "Multi-Robot Collaboration",
+    "text": [
+     "Coordinated task execution with swarm intelligence and distributed decision-making"
+    ]
+   },
+   {
+    "title": "General Purpose AI",
+    "text": [
+     "Adaptive learning for diverse tasks without task-specific programming"
+    ]
+   }
+  ],
+  "images": [],
+  "buttons": []
+ },
+ {
+  "heading": "Build the Future of Humanoid Robotics",
+  "sub": "",
+  "paras": [
+   "Partner with Deepgrid to bring intelligent humanoid robots to life"
+  ],
+  "items": [],
+  "images": [],
+  "buttons": [
+   "Collaborate With Us -> /contact",
+   "View DG-T100 NPU -> /products/dg-t100",
+   "Download SDK -> /software/dgrid-sdk"
+  ]
+ }
+]

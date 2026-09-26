@@ -1,0 +1,139 @@
+[
+ {
+  "heading": "Achievements",
+  "sub": "",
+  "paras": [
+   "Milestones and recognition in AI acceleration innovation"
+  ],
+  "items": [],
+  "images": [
+   {
+    "src": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1920&h=1080&fit=crop",
+    "alt": "Achievements"
+   }
+  ],
+  "buttons": []
+ },
+ {
+  "heading": "Featured awards",
+  "sub": "",
+  "paras": [],
+  "items": [
+   {
+    "title": "Top 50 Startups in Telangana",
+    "text": [
+     "DeepGrid Semi Pvt. Ltd. is redefining the semiconductor landscape with its indigenous DGrid SoC, a low-power, high-parallelism AI chipset designed for ADAS, robotics, and edge intelligence. With a mission to bring Full-Stack Edge Intelligence — from Silicon, Sensors, Systems to Sentience, DeepGrid Semi stands at the forefront of India's next-generation compute innovation."
+    ]
+   }
+  ],
+  "images": [
+   {
+    "src": "/award1.jpeg",
+    "alt": "Top 50 Startups in Telangana"
+   },
+   {
+    "src": "/award2.jpeg",
+    "alt": "Best AI Chip Innovation"
+   },
+   {
+    "src": "/award1.jpeg",
+    "alt": "Excellence in ADAS Technology"
+   }
+  ],
+  "buttons": []
+ },
+ {
+  "heading": "All Awards & Recognition",
+  "sub": "",
+  "paras": [
+   "Selected among the Top 50 Startups in Telangana for pioneering India's edge-first semiconductor and AI ecosystem with the DGrid-SoC chipset.",
+   "Recognized among the top 10 AI semiconductor companies globally for our innovative NPU architecture and transformer optimization capabilities.",
+   "Honored for breakthrough innovations in edge AI processing and power-efficient chip design methodologies.",
+   "Our DG-T100 transformer accelerator received acclaim for its elegant architecture and exceptional performance-per-watt ratio.",
+   "Selected as a Technology Pioneer for advancing AI acceleration technology and contributing to autonomous systems development.",
+   "Featured for our disruptive approach to AI chip design and rapid market adoption in robotics and automotive sectors.",
+   "Awarded at CES for our groundbreaking edge AI solutions that enable real-time processing in resource-constrained environments.",
+   "Recognized by MIT Technology Review for pioneering work in neural processing unit architecture and AI acceleration.",
+   "Named Rising Star at TechCrunch Disrupt for our rapid growth and innovative solutions in the AI semiconductor space."
+  ],
+  "items": [
+   {
+    "title": "Top 50 Startups in Telangana",
+    "text": [
+     "Telangana Innovation Ecosystem & T-Hub - 2024"
+    ]
+   },
+   {
+    "title": "Top 10 AI Semiconductor Companies",
+    "text": [
+     "Industry Analyst Report - 2024"
+    ]
+   },
+   {
+    "title": "Innovation Excellence Award",
+    "text": [
+     "Semiconductor Industry Association - 2024"
+    ]
+   },
+   {
+    "title": "Best Product Design - DG-T100",
+    "text": [
+     "Design & Engineering Awards - 2024"
+    ]
+   },
+   {
+    "title": "Technology Pioneer",
+    "text": [
+     "World Economic Forum - 2023"
+    ]
+   },
+   {
+    "title": "Fast Company Most Innovative",
+    "text": [
+     "Fast Company Magazine - 2023"
+    ]
+   },
+   {
+    "title": "Best Emerging Technology",
+    "text": [
+     "CES Innovation Awards - 2023"
+    ]
+   },
+   {
+    "title": "Breakthrough Technology Award",
+    "text": [
+     "MIT Technology Review - 2022"
+    ]
+   },
+   {
+    "title": "Rising Star Company",
+    "text": [
+     "TechCrunch Disrupt - 2022"
+    ]
+   }
+  ],
+  "images": [],
+  "buttons": []
+ },
+ {
+  "heading": "",
+  "sub": "",
+  "paras": [],
+  "items": [],
+  "images": [],
+  "buttons": []
+ },
+ {
+  "heading": "Achievements",
+  "sub": "",
+  "paras": [
+   "1,000+ ADAS chipsets currently in the prototyping stage, showcasing our commitment to innovation and safety.",
+   "5+ Strategic collaborations with top Original Equipment Manufacturers (OEMs), including Yamaha Motors, Kia Motors, Renault-Nissan, and Maruti Suzuki.",
+   "3+ Patents filed for AI-based safety technologies that enhance automotive performance and accident prevention.",
+   "20+ Skilled engineers and researchers committed to advancing our ADAS solutions."
+  ],
+  "items": [],
+  "images": [],
+  "buttons": []
+ }
+]

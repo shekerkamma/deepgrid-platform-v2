@@ -10,6 +10,8 @@ import {
 import { useNavigation, useHashLinks } from './use-navigation';
 import { to } from './routes';
 import { MegaNav } from './mega-nav';
+import { pageById } from './company-pages';
+import CompanyPageView from './views/company-page';
 import { useReveal, useScrollVars } from './motion';
 import { Brand, groups, navigation, products, type Product } from './shared';
 import Overview from './views/overview';
@@ -38,7 +40,8 @@ const titles: Record<string, string> = {
   investment: 'Investment case · DeepGrid Semi',
 };
 
-export function SitePage({ view: pageView, product: productId }: { view: string; product?: string }) {
+export function SitePage({ view: pageView, product: productId, page: pageId }: { view: string; product?: string; page?: string }) {
+  const companyPage = pageId ? pageById(pageId) : undefined;
   const {
     route,
     navigate: changeView,
@@ -87,8 +90,8 @@ export function SitePage({ view: pageView, product: productId }: { view: string;
     return () => q.removeEventListener('change', motion);
   }, []);
   useEffect(() => {
-    document.title = titles[view] || titles.overview;
-  }, [view]);
+    document.title = companyPage ? companyPage.title + ' · DeepGrid Semi' : titles[view] || titles.overview;
+  }, [view, companyPage]);
   useScrollVars();
   useReveal(
     view +
@@ -98,6 +101,7 @@ export function SitePage({ view: pageView, product: productId }: { view: string;
   );
 
   const viewIndex = navigation.findIndex((n) => n[0] === view),
+    hereLabel = companyPage ? companyPage.label : navigation[Math.max(0, viewIndex)][1],
     returnTo = params.get('from'),
     returnProduct = returnTo
       ? products.find(
@@ -137,7 +141,7 @@ export function SitePage({ view: pageView, product: productId }: { view: string;
           aria-label="Open navigation"
           onClick={() => setMenu(true)}
         >
-          <span>{navigation[viewIndex][1]}</span>
+          <span>{hereLabel}</span>
           <Menu aria-hidden="true" />
         </button>
       </header>
@@ -163,7 +167,7 @@ export function SitePage({ view: pageView, product: productId }: { view: string;
               Home
             </a>
             <span aria-hidden="true">/</span>
-            <span aria-current="page">{navigation[viewIndex][1]}</span>
+            <span aria-current="page">{hereLabel}</span>
             {returnTo && (
               <button className="context-back" onClick={() => go(returnTo)}>
                 <ArrowLeft size={16} aria-hidden="true" />
@@ -178,6 +182,7 @@ export function SitePage({ view: pageView, product: productId }: { view: string;
           </nav>
         )}
         <Fragment key={seeded}>
+        {companyPage && <CompanyPageView page={companyPage} />}
         {view === 'overview' && (
           <Overview navigate={navigate} go={go} reduced={reduced} />
         )}
@@ -255,7 +260,7 @@ export function SitePage({ view: pageView, product: productId }: { view: string;
           />
         )}
         </Fragment>
-        {view !== 'overview' && !(view === 'portfolio' && product) && (
+        {!companyPage && view !== 'overview' && !(view === 'portfolio' && product) && (
           <nav className="section-pagination" aria-label="Section navigation">
             {viewIndex > 0 ? (
               <a

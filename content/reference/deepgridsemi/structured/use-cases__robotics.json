@@ -1,0 +1,88 @@
+[
+ {
+  "heading": "Industrial Robotics",
+  "sub": "",
+  "paras": [
+   "Empowering industrial automation with AI-driven robotics for manufacturing, logistics, and warehouse operations.",
+   "Sub-millimeter accuracy for manufacturing tasks",
+   "Synchronized operations for complex workflows",
+   "Dynamic response to changing production needs"
+  ],
+  "items": [
+   {
+    "title": "Precision Control",
+    "text": []
+   },
+   {
+    "title": "Multi-Robot Coordination",
+    "text": []
+   },
+   {
+    "title": "Real-Time Adaptation",
+    "text": []
+   }
+  ],
+  "images": [],
+  "buttons": [
+   "Explore Solutions →",
+   "View Demo"
+  ]
+ },
+ {
+  "heading": "Industrial Robotics Platform",
+  "sub": "",
+  "paras": [
+   "Intelligent automation + Precision control + Adaptive learning",
+   "Manufacturing and logistics are being transformed by intelligent robotics that can adapt to changing production requirements, collaborate with human workers, and optimize operations in real-time. Deepgrid's Industrial Robotics Platform delivers the AI processing power needed for vision-guided manipulation, collaborative robotics, and autonomous material handling—enabling factories and warehouses to achieve unprecedented levels of efficiency and flexibility."
+  ],
+  "items": [],
+  "images": [],
+  "buttons": [
+   "Learn More",
+   "Case Studies"
+  ]
+ },
+ {
+  "heading": "Deepgrid's Robotics Solution Stack",
+  "sub": "",
+  "paras": [
+   "Complete AI platform for industrial automation"
+  ],
+  "items": [
+   {
+    "title": "Vision Processing",
+    "text": [
+     "Real-time object detection and quality inspection"
+    ]
+   },
+   {
+    "title": "Motion Planning",
+    "text": [
+     "Collision-free path planning and trajectory optimization"
+    ]
+   },
+   {
+    "title": "Fleet Management",
+    "text": [
+     "Coordinated control of multiple robots and AGVs"
+    ]
+   }
+  ],
+  "images": [],
+  "buttons": []
+ },
+ {
+  "heading": "Transform Your Manufacturing Operations",
+  "sub": "",
+  "paras": [
+   "Partner with Deepgrid to build intelligent robotic systems"
+  ],
+  "items": [],
+  "images": [],
+  "buttons": [
+   "Get Started -> /contact",
+   "View DG-T100 NPU -> /products/dg-t100",
+   "Download SDK -> /software/dgrid-sdk"
+  ]
+ }
+]

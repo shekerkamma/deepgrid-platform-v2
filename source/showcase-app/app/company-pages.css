@@ -1,0 +1,82 @@
+/* Software / Use case / About / Contact pages (app/views/company-page.tsx). The showcase's tokens;
+   the section shapes follow deepgridsemi.com's templates. */
+.cp-page { display: grid; gap: 0; }
+.cp-sec { padding-block: clamp(2.5rem, 5vw, 4rem); border-top: 1px solid var(--line-soft); }
+.cp-sec-head { max-width: 46rem; margin-bottom: 1.75rem; }
+.cp-sec h2, .cp-split h2 { font-family: var(--font-display, inherit); font-size: var(--sc-t-section, 1.75rem); line-height: 1.15; letter-spacing: -.01em; margin: .25rem 0 .5rem; color: var(--ink); text-wrap: balance; }
+.cp-lede { color: var(--ink-2); max-width: 60ch; margin: 0; }
+.cp-page .kicker { margin: 0; font-size: var(--sc-t-meta); letter-spacing: var(--sc-track-meta); text-transform: uppercase; color: var(--copper); }
+
+.cp-figure { margin: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.cp-figure img { display: block; width: 100%; height: 100%; max-height: 460px; object-fit: cover; }
+.cp-figure figcaption { padding: .5rem .8rem; font-size: var(--sc-t-meta); color: var(--ink-3); border-top: 1px solid var(--line-soft); }
+
+.cp-hero { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 1.25rem; margin-bottom: 2.5rem; align-items: stretch; }
+.cp-hero-solo { grid-template-columns: 1fr; }
+.cp-hero-img img { height: clamp(220px, 30vw, 420px); }
+.cp-chips { list-style: none; margin: 0; padding: 0; display: grid; gap: .75rem; align-content: center; }
+.cp-chips li { display: grid; gap: .2rem; padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.cp-chips strong { color: var(--ink); font-weight: 600; }
+.cp-chips span { color: var(--ink-2); font-size: var(--sc-t-control); }
+
+.cp-split { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+.cp-split-solo { grid-template-columns: minmax(0, 1fr); max-width: 52rem; }
+.cp-split-text p { color: var(--ink-2); max-width: 62ch; }
+.cp-split .cp-figure img { max-height: 380px; }
+
+.cp-cards { display: grid; gap: 1rem; }
+.cp-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cp-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cp-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.cp-card { display: grid; align-content: start; gap: .45rem; padding: 1.25rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); }
+.cp-card h3, .cp-card h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--ink); }
+.cp-card p { margin: 0; color: var(--ink-2); font-size: var(--sc-t-control); line-height: 1.55; }
+.cp-card-link { transition: border-color .15s ease, background-color .15s ease; }
+.cp-card-link:hover { border-color: var(--copper); background: var(--surface-2); }
+.cp-card-go { display: inline-flex; align-items: center; gap: .3rem; margin-top: .25rem; color: var(--copper); font-size: var(--sc-t-control); }
+.cp-meta { color: var(--copper) !important; font-size: var(--sc-t-meta) !important; letter-spacing: var(--sc-track-meta); text-transform: uppercase; }
+.cp-card-img { width: calc(100% + 2.5rem); margin: -1.25rem -1.25rem .5rem; height: 170px; object-fit: contain; background: #0b0d0c; border-bottom: 1px solid var(--line-soft); }
+
+.cp-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; counter-reset: s; }
+.cp-steps li { padding: 1.25rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.cp-step-n { display: inline-grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 50%; border: 1px solid var(--copper); color: var(--copper); font-size: var(--sc-t-meta); margin-bottom: .6rem; }
+.cp-steps h3 { margin: 0 0 .35rem; font-size: 1.05rem; }
+.cp-steps p { margin: 0; color: var(--ink-2); font-size: var(--sc-t-control); }
+
+.cp-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 1rem; }
+.cp-stats div { display: grid; gap: .2rem; padding: .9rem 0; border-top: 2px solid var(--copper); }
+.cp-stats strong { font-family: var(--font-display, inherit); font-size: 2rem; font-weight: 400; color: var(--ink); }
+.cp-stats span { color: var(--ink-2); font-size: var(--sc-t-control); }
+
+.cp-people { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.cp-person { padding: 1.25rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); display: grid; gap: .5rem; align-content: start; }
+.cp-person-head { display: flex; gap: .9rem; align-items: center; }
+.cp-person-head img, .cp-initials { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex: none; background: var(--surface-2); }
+.cp-initials { display: grid; place-items: center; color: var(--copper); font-weight: 600; border: 1px solid var(--line); }
+.cp-person h3 { margin: 0; font-size: 1.05rem; }
+.cp-role { margin: .15rem 0 0; color: var(--copper); font-size: var(--sc-t-control); }
+.cp-detail { margin: 0; color: var(--ink-3); font-size: var(--sc-t-meta); line-height: 1.5; }
+.cp-bio-toggle { justify-self: start; font-size: var(--sc-t-control); }
+.cp-bio { margin: 0; padding-left: 1.1rem; display: grid; gap: .4rem; color: var(--ink-2); font-size: var(--sc-t-control); }
+
+.cp-figures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.cp-figures img { height: clamp(240px, 30vw, 420px); }
+
+.cp-contact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.cp-contact svg { color: var(--copper); }
+
+.cp-cta { text-align: left; }
+.cp-cta p { color: var(--ink-2); max-width: 60ch; }
+.cp-actions { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; align-items: center; margin-top: 1rem; }
+.cp-actions a { display: inline-flex; align-items: center; gap: .4rem; }
+
+.cp-page :focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
+
+@media (max-width: 1000px) {
+  .cp-hero, .cp-split { grid-template-columns: 1fr; }
+  .cp-cols-4, .cp-steps, .cp-people, .cp-cols-3, .cp-contact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .cp-cols-2, .cp-cols-3, .cp-cols-4, .cp-steps, .cp-people, .cp-figures, .cp-contact { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .cp-card-link { transition: none; } }

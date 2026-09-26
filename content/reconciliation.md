@@ -65,3 +65,24 @@ R1–R8 describe it.
 | O3 | "T100" is the DG-T100 Transformer NPU. The showcase's licence offering becomes **Licence: DG-T100 models and toolchain**. |
 | O4 | First silicon is stated as SkyWater 130 nm (2026). The showcase's 28 nm die is presented as the roadmap production node, consistent with the reference's own "28 nm → 5 nm" roadmap. Which SKUs wait for 28 nm stays unstated until a source says. |
 | O5 | Founding year omitted until confirmed. |
+
+## Correction (2026-09-26): R1 and O4 were wrong
+
+deepgridsemi.com's **team page** names the contracted partners for SoC2: "Muse Semi / GSME — TSMC 28nm
+HPC+ shuttle — six-chiplet combo-die (~$630K NRE), 79-day fab cycle", with SmartSoC (physical
+design), PrimeSoC (feasibility reports DGrid-FS-001/002-2026), Terminus Circuits (PHY IP) and
+Anamya Technologies (Artix-7 FPGA boards). The reference therefore does not say "130 nm instead of
+28 nm". It says both: a **SkyWater 130 nm proof-of-concept tape-out** (products/dg-a100) and the
+**TSMC 28 nm SoC2 product die** (about/team), which is what the showcase says.
+
+- **R1 (revised):** keep the showcase's 28 nm SoC2; add the SkyWater 130 nm proof-of-concept step
+  and "first silicon in 2026" from the A100 page. No reframing of the portfolio.
+- **O4 (revised):** resolved by R1; nothing is waiting on a node decision.
+- **Team size:** the team page's 28 engineers (with counts per domain) replaces about/story's "100+".
+
+## New pages from deepgridsemi.com (Software, Use Cases, About, Contact)
+
+Built in `app/company-pages.ts` (each section records the reference page it came from). Left out:
+the SDK's Axelera Voyager copy ("AIPUs", "Order Metis!", GitHub download), ADAS "ISO 26262 ASIL-D
+compliant" and "sub-10 ms" (contradicted by the measured 35.96 ms), About's "100+", "Founded 2020"
+and superlatives, six unsourced awards, and engineers' individual names (shown as counts by domain).

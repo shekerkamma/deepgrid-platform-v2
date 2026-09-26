@@ -1,0 +1,88 @@
+[
+ {
+  "heading": "Smart Mobility",
+  "sub": "",
+  "paras": [
+   "Transforming transportation with AI-powered fleet management, route optimization, and intelligent logistics for the future of mobility.",
+   "AI-optimized routes for efficiency and cost reduction",
+   "Real-time vehicle tracking and communication",
+   "AI-driven vehicle health monitoring and diagnostics"
+  ],
+  "items": [
+   {
+    "title": "Smart Routing",
+    "text": []
+   },
+   {
+    "title": "Fleet Connectivity",
+    "text": []
+   },
+   {
+    "title": "Predictive Maintenance",
+    "text": []
+   }
+  ],
+  "images": [],
+  "buttons": [
+   "Explore Solutions →",
+   "View Demo"
+  ]
+ },
+ {
+  "heading": "Smart Mobility Platform",
+  "sub": "",
+  "paras": [
+   "Intelligent routing + Fleet optimization + Predictive analytics",
+   "The mobility landscape is transforming with the rise of electric vehicles, autonomous fleets, and on-demand transportation services. Deepgrid's Smart Mobility Platform enables transportation providers to optimize operations, reduce costs, and improve service quality through AI-powered fleet management, intelligent routing, and predictive maintenance—creating a more efficient and sustainable transportation ecosystem."
+  ],
+  "items": [],
+  "images": [],
+  "buttons": [
+   "Learn More",
+   "Case Studies"
+  ]
+ },
+ {
+  "heading": "Deepgrid's Mobility Solution Stack",
+  "sub": "",
+  "paras": [
+   "Complete AI platform for intelligent transportation"
+  ],
+  "items": [
+   {
+    "title": "Route Optimization",
+    "text": [
+     "AI-powered routing for fuel efficiency and time savings"
+    ]
+   },
+   {
+    "title": "Fleet Intelligence",
+    "text": [
+     "Real-time analytics and predictive insights"
+    ]
+   },
+   {
+    "title": "Asset Tracking",
+    "text": [
+     "GPS and IoT integration for complete visibility"
+    ]
+   }
+  ],
+  "images": [],
+  "buttons": []
+ },
+ {
+  "heading": "Transform Your Mobility Operations",
+  "sub": "",
+  "paras": [
+   "Partner with Deepgrid to build intelligent transportation systems"
+  ],
+  "items": [],
+  "images": [],
+  "buttons": [
+   "Get Started -> /contact",
+   "View DG-S100 Controller -> /products/dg-s100",
+   "Download SDK -> /software/dgrid-sdk"
+  ]
+ }
+]

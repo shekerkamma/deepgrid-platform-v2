@@ -10,6 +10,7 @@ import './ask.css';
 import './site.css';
 import './showcase-refinement.css';
 import './mega-nav.css';
+import './company-pages.css';
 import { BASE } from './routes';
 
 const site = 'https://shekerkamma.github.io/deepgrid-platform-v2/';

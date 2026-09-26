@@ -1,0 +1,203 @@
+[
+ {
+  "heading": "About Us",
+  "sub": "",
+  "paras": [
+   "Our mission is to provide businesses with cutting-edge AI acceleration technology to thrive in today's intelligent systems market."
+  ],
+  "items": [],
+  "images": [
+   {
+    "src": "https://images.unsplash.com/photo-1555255707-c07966088b7b?w=1920&h=1080&fit=crop",
+    "alt": "Semiconductor Technology"
+   }
+  ],
+  "buttons": []
+ },
+ {
+  "heading": "Who We Are",
+  "sub": "",
+  "paras": [
+   "Deepgrid Semi is a pioneering semiconductor company specializing in AI acceleration solutions for edge computing. Founded by a team of industry veterans with decades of combined experience in chip design, AI, and autonomous systems, we are at the forefront of the AI revolution.",
+   "Our headquarters in Hyderabad, India, serves as a hub of innovation where world-class engineers and researchers collaborate to push the boundaries of what's possible in AI hardware acceleration.",
+   "We focus on delivering specialized System-on-Chip (SoC) solutions that bring datacenter-class AI performance to edge devices, enabling real-time intelligence in autonomous vehicles, robotics, industrial automation, and smart infrastructure."
+  ],
+  "items": [],
+  "images": [],
+  "buttons": []
+ },
+ {
+  "heading": "Company Strategy",
+  "sub": "",
+  "paras": [
+   "Hover over each card to explore our strategic pillars"
+  ],
+  "items": [
+   {
+    "title": "Our Philosophy",
+    "text": []
+   },
+   {
+    "title": "Our Philosophy",
+    "text": [
+     "Our philosophy is simple: innovate with a purpose. We don't just create technology for the sake of innovation; we aim to solve real-world problems that impact road safety and mobility.",
+     "Our approach is focused on delivering practical, high-performance solutions that enhance driver awareness, anticipate potential hazards, and respond rapidly to keep you safe."
+    ]
+   },
+   {
+    "title": "Our Vision",
+    "text": []
+   },
+   {
+    "title": "Our Vision",
+    "text": [
+     "Towards ZERO Fatalities on Roads. We envision a world where roads are safer for everyone, where AI-powered automotive technology significantly reduces traffic accidents.",
+     "By equipping vehicles with state-of-the-art ADAS solutions, we aim to make this vision a reality. Looking back from 2040, we should proudly declare that there used to be so many fatalities on our roads, but now we have achieved zero."
+    ]
+   },
+   {
+    "title": "Our Mission",
+    "text": []
+   },
+   {
+    "title": "Our Mission",
+    "text": [
+     "Our mission is to push the boundaries of automotive technology by developing intelligent chipsets that provide predictive safety features and real-time assistance.",
+     "We aim to set new benchmarks in the ADAS industry by making vehicles smarter, more responsive, and capable of preventing accidents before they happen."
+    ]
+   },
+   {
+    "title": "Our Philosophy",
+    "text": [
+     "Our philosophy is simple: innovate with a purpose. We aim to solve real-world problems that impact road safety and mobility."
+    ]
+   },
+   {
+    "title": "Our Vision",
+    "text": [
+     "Towards ZERO Fatalities on Roads. We envision a world where AI-powered automotive technology significantly reduces traffic accidents."
+    ]
+   },
+   {
+    "title": "Our Mission",
+    "text": [
+     "Push the boundaries of automotive technology by developing intelligent chipsets that provide predictive safety features and real-time assistance."
+    ]
+   }
+  ],
+  "images": [
+   {
+    "src": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=800&fit=crop",
+    "alt": "Our Philosophy"
+   },
+   {
+    "src": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=800&fit=crop",
+    "alt": "Our Vision"
+   },
+   {
+    "src": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&h=800&fit=crop",
+    "alt": "Our Mission"
+   },
+   {
+    "src": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop",
+    "alt": "Our Philosophy"
+   },
+   {
+    "src": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop",
+    "alt": "Our Vision"
+   },
+   {
+    "src": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop",
+    "alt": "Our Mission"
+   }
+  ],
+  "buttons": []
+ },
+ {
+  "heading": "Our Values",
+  "sub": "",
+  "paras": [],
+  "items": [
+   {
+    "title": "Innovation",
+    "text": [
+     "We are dedicated to continuously exploring new technologies and methodologies to enhance automotive safety."
+    ]
+   },
+   {
+    "title": "Safety",
+    "text": [
+     "Our core focus is on keeping drivers and passengers safe, making it the foundation of all our developments."
+    ]
+   },
+   {
+    "title": "Quality",
+    "text": [
+     "We deliver reliable, high-performance technology designed to meet stringent automotive standards."
+    ]
+   },
+   {
+    "title": "Collaboration",
+    "text": [
+     "We work closely with leading automotive manufacturers and partners to bring the best ADAS solutions to the market."
+    ]
+   }
+  ],
+  "images": [],
+  "buttons": []
+ },
+ {
+  "heading": "From Concept to Implementation",
+  "sub": "",
+  "paras": [
+   "At DeepGrid Semi, we take pride in turning innovative concepts into reality. Our development process involves rigorous research, extensive testing, and collaboration with industry leaders to ensure our hardware & software solutions are not only technologically advanced but also practical and effective in real-world applications.",
+   "We aim to deliver products that address the most challenging driving conditions, such as low visibility and unpredictable obstacles, with features like radar-based assistance and blind-spot detection."
+  ],
+  "items": [
+   {
+    "title": "Rigorous Research",
+    "text": [
+     "Extensive R&D for cutting-edge solutions"
+    ]
+   },
+   {
+    "title": "Extensive Testing",
+    "text": [
+     "Real-world validation and optimization"
+    ]
+   },
+   {
+    "title": "Industry Collaboration",
+    "text": [
+     "Partnering with leading manufacturers"
+    ]
+   },
+   {
+    "title": "Practical Solutions",
+    "text": [
+     "Real-world effectiveness guaranteed"
+    ]
+   }
+  ],
+  "images": [
+   {
+    "src": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&h=800&fit=crop",
+    "alt": "From Concept to Implementation"
+   }
+  ],
+  "buttons": []
+ },
+ {
+  "heading": "Join Us on Our Journey",
+  "sub": "",
+  "paras": [
+   "Whether you're looking to partner with us, join our team, or learn more about our technology, we'd love to hear from you."
+  ],
+  "items": [],
+  "images": [],
+  "buttons": [
+   "Contact Us",
+   "View Careers"
+  ]
+ }
+]

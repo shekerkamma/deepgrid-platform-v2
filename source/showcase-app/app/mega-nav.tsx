@@ -7,7 +7,8 @@ import { useEffect, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { products, groups } from './shared';
 import story from './data/tech-story.json';
-import { to } from './routes';
+import { to, BASE } from './routes';
+import { companyPages } from './company-pages';
 
 type Item = { label: string; href: string; note?: string };
 type Menu = { id: string; label: string; views: string[]; columns: { title?: string; items: Item[] }[] };
@@ -53,8 +54,21 @@ export const menus: Menu[] = [
   },
 ];
 
-/** Flat links between the dropdowns. */
-const flat: { view: string; label: string }[] = [{ view: 'film', label: 'Demonstrations' }];
+const fromPages = (menu: string) => companyPages.filter((p) => p.menu === menu).map((p) => ({ label: p.label, href: BASE + p.path, note: p.lede }));
+menus.push(
+  { id: 'software', label: 'Software', views: ['software'], columns: [{ items: fromPages('software') }] },
+  { id: 'usecases', label: 'Use Cases', views: ['usecases'], columns: [{ items: fromPages('usecases') }] },
+  { id: 'about', label: 'About', views: ['about'], columns: [{ items: fromPages('about') }] },
+);
+
+/** The menu in the reference site's order: dropdowns and plain links interleaved. */
+type Entry = { menu: string } | { view: string; label: string; href: string };
+const order: Entry[] = [
+  { menu: 'products' }, { menu: 'silicon' }, { menu: 'software' }, { menu: 'usecases' }, { menu: 'investors' },
+  { view: 'film', label: 'Demonstrations', href: to('film') },
+  { menu: 'about' },
+  { view: 'contact', label: 'Contact', href: BASE + 'contact' },
+];
 
 export function MegaNav({ view, onNavigate, label = 'Primary navigation' }: { view: string; onNavigate?: () => void; label?: string }) {
   const [open, setOpen] = useState<string | null>(null);
@@ -78,7 +92,15 @@ export function MegaNav({ view, onNavigate, label = 'Primary navigation' }: { vi
         <img src="brand/deepgrid-d-64.png" alt="" aria-hidden="true" width={20} height={20} />
         Deepgrid Semi
       </a>
-      {menus.map((m) => {
+      {order.map((e) => {
+        if ('view' in e) {
+          return (
+            <a key={e.view} href={e.href} className={view === e.view ? 'active' : ''} aria-current={view === e.view ? 'page' : undefined} onClick={onNavigate}>
+              {e.label}
+            </a>
+          );
+        }
+        const m = menus.find((x) => x.id === e.menu)!;
         const isOpen = open === m.id;
         const active = m.views.includes(view);
         return (
@@ -107,11 +129,6 @@ export function MegaNav({ view, onNavigate, label = 'Primary navigation' }: { vi
           </div>
         );
       })}
-      {flat.map((f) => (
-        <a key={f.view} href={to(f.view)} className={view === f.view ? 'active' : ''} aria-current={view === f.view ? 'page' : undefined} onClick={onNavigate}>
-          {f.label}
-        </a>
-      ))}
     </nav>
   );
 }
